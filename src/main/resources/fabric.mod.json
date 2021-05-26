@@ -3,28 +3,24 @@
   "id": "meltec",
   "version": "${version}",
 
-  "name": "Example Mod",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "name": "MelteC Mod",
+  "description": "An alchemy-based Minecraft overhaul mod",
   "authors": [
-    "Me!"
+    "KingCyrus20"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "sources": "https://github.com/KingCyrus20/MelteC-mod"
   },
 
-  "license": "CC0-1.0",
+  "license": "MIT",
   "icon": "assets/meltec/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.fabricmc.example.ExampleModKt::init"
+      "io.meltec.mc.ModKt::init"
     ]
   },
-  "mixins": [
-    "meltec.mixins.json"
-  ],
   "depends": {
     "fabricloader": ">=0.8.7",
     "fabric": "*",
