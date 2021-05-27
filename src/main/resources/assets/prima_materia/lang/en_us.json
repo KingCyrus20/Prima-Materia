@@ -1,3 +1,6 @@
 {
-  "item.prima_materia.bow_drill": "Bow drill"
+  "item.prima_materia.bow_drill": "Bow drill",
+  "block.prima_materia.copper_ore": "Copper Ore",
+  "block.prima_materia.tin_ore": "Tin Ore",
+  "block.prima_materia.zinc_ore": "Zinc Ore"
 }
