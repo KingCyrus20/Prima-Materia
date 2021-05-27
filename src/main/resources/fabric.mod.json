@@ -35,5 +35,8 @@
   },
   "suggests": {
     "flamingo": "*"
-  }
+  },
+  "mixins": [
+    "prima_materia.mixins.json"
+  ]
 }

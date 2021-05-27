@@ -11,7 +11,7 @@ import net.minecraft.world.gen.feature.Feature
 import net.minecraft.world.gen.feature.OreFeatureConfig
 
 object PrimaOres {
-    private val ORE_COPPER_OVERWORLD = Feature.ORE
+    val ORE_COPPER_OVERWORLD = Feature.ORE
         .configure(
             OreFeatureConfig(
                 OreFeatureConfig.Rules.BASE_STONE_OVERWORLD,
@@ -23,7 +23,7 @@ object PrimaOres {
         .spreadHorizontally()
         .repeat(1)
 
-    private val ORE_TIN_OVERWORLD = Feature.ORE
+    val ORE_TIN_OVERWORLD = Feature.ORE
         .configure(
             OreFeatureConfig(
                 OreFeatureConfig.Rules.BASE_STONE_OVERWORLD,
@@ -35,7 +35,7 @@ object PrimaOres {
         .spreadHorizontally()
         .repeat(1)
 
-    private val ORE_ZINC_OVERWORLD = Feature.ORE
+    val ORE_ZINC_OVERWORLD = Feature.ORE
         .configure(
             OreFeatureConfig(
                 OreFeatureConfig.Rules.BASE_STONE_OVERWORLD,
