@@ -2,11 +2,14 @@
   "schemaVersion": 1,
   "id": "meltec",
   "version": "0.0.0",
-
   "name": "MelteC Mod",
   "description": "An alchemy-based Minecraft overhaul mod",
   "authors": [
-    "KingCyrus20"
+    "KingCyrus20",
+    "M_bot",
+    "blacksmithgu",
+    "Capt_Happy",
+    "Cyanites"
   ],
   "contact": {
     "sources": "https://github.com/KingCyrus20/MelteC-mod"
