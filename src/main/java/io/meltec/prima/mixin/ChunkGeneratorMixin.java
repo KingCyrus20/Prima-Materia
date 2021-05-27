@@ -10,6 +10,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class ChunkGeneratorMixin {
     @Inject(method = "getSeaLevel()I", at = @At("RETURN"), cancellable = true)
     private void getSeaLevel(CallbackInfoReturnable<Integer> info){
+        info.setReturnValue(127);
+    }
+
+    @Inject(method = "getSpawnHeight()I", at = @At("RETURN"), cancellable = true)
+    private void getSpawnHeight(CallbackInfoReturnable<Integer> info){
         info.setReturnValue(128);
     }
 }

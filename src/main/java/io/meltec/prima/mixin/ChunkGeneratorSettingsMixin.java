@@ -21,6 +21,6 @@ public class ChunkGeneratorSettingsMixin {
     private void ChunkGeneratorSettings(StructuresConfig structuresConfig, GenerationShapeConfig generationShapeConfig,
                                         BlockState defaultBlock, BlockState defaultFluid, int bedrockCeilingY,
                                         int bedrockFloorY, int seaLevel, boolean mobGenerationDisabled, CallbackInfo ci){
-        this.seaLevel = 128;
+        this.seaLevel = 127;
     }
 }
