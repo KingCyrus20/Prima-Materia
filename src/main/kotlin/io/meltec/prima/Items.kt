@@ -1,4 +1,4 @@
-package io.meltec.mc
+package io.meltec.prima
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings
 import net.minecraft.item.Item

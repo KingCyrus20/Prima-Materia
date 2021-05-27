@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "id": "meltec",
+  "id": "prima_materia",
   "version": "0.0.0",
-  "name": "MelteC Mod",
+  "name": "Prima Materia",
   "description": "An alchemy-based Minecraft overhaul mod",
   "authors": [
     "KingCyrus20",
@@ -12,16 +12,16 @@
     "Cyanites"
   ],
   "contact": {
-    "sources": "https://github.com/KingCyrus20/MelteC-mod"
+    "sources": "https://github.com/KingCyrus20/Prima-Materia"
   },
 
   "license": "MIT",
-  "icon": "assets/meltec/icon.png",
+  "icon": "assets/prima_materia/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-      "io.meltec.mc.ModKt::init"
+      "io.meltec.prima.ModKt::init"
     ]
   },
   "depends": {

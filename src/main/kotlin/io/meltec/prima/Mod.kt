@@ -1,4 +1,4 @@
-package io.meltec.mc
+package io.meltec.prima
 
 @Suppress("unused")
 fun init() {
