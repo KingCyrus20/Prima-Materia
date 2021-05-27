@@ -1,8 +1,11 @@
 package io.meltec.prima
 
-@Suppress("unused")
-fun init() {
-    PrimaItems.register()
-    PrimaBlocks.register()
-    PrimaOres.register()
+import net.fabricmc.api.ModInitializer
+
+object PrimaMateria : ModInitializer {
+    override fun onInitialize() {
+        PrimaItems.register()
+        PrimaBlocks.register()
+        PrimaOres.register()
+    }
 }

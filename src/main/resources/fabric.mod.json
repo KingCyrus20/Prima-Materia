@@ -21,7 +21,10 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "io.meltec.prima.PrimaMateriaKt::init"
+      {
+        "adapter": "kotlin",
+        "value": "io.meltec.prima.PrimaMateria"
+      }
     ]
   },
   "depends": {
