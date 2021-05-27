@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "meltec",
-  "version": "${version}",
+  "version": "0.0.0",
 
   "name": "MelteC Mod",
   "description": "An alchemy-based Minecraft overhaul mod",
