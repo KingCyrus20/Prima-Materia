@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "prima_materia",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "name": "Prima Materia",
   "description": "An alchemy-based Minecraft overhaul mod",
   "authors": [
@@ -21,7 +21,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "io.meltec.prima.ModKt::init"
+      "io.meltec.prima.PrimaMateriaKt::init"
     ]
   },
   "depends": {

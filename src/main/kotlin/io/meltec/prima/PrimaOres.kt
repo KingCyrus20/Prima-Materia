@@ -9,11 +9,11 @@ import net.minecraft.world.gen.decorator.RangeDecoratorConfig
 import net.minecraft.world.gen.feature.Feature
 import net.minecraft.world.gen.feature.OreFeatureConfig
 
-object Ores {
+object PrimaOres {
     private val ORE_COPPER_OVERWORLD = Feature.ORE
         .configure(OreFeatureConfig(
             OreFeatureConfig.Rules.BASE_STONE_OVERWORLD,
-            Blocks.COPPER_ORE.defaultState,
+            PrimaBlocks.COPPER_ORE.defaultState,
             64
         ))
         .decorate(Decorator.RANGE.configure(RangeDecoratorConfig(0,0,64)))
@@ -23,7 +23,7 @@ object Ores {
     private val ORE_TIN_OVERWORLD = Feature.ORE
         .configure(OreFeatureConfig(
             OreFeatureConfig.Rules.BASE_STONE_OVERWORLD,
-            Blocks.TIN_ORE.defaultState,
+            PrimaBlocks.TIN_ORE.defaultState,
             64
         ))
         .decorate(Decorator.RANGE.configure(RangeDecoratorConfig(0,0,64)))
@@ -33,7 +33,7 @@ object Ores {
     private val ORE_ZINC_OVERWORLD = Feature.ORE
         .configure(OreFeatureConfig(
             OreFeatureConfig.Rules.BASE_STONE_OVERWORLD,
-            Blocks.ZINC_ORE.defaultState,
+            PrimaBlocks.ZINC_ORE.defaultState,
             64
         ))
         .decorate(Decorator.RANGE.configure(RangeDecoratorConfig(0,0,64)))

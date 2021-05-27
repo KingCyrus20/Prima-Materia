@@ -1,0 +1,11 @@
+# Default behavior for all text.
+* text=auto
+
+# Code files should use CRLF for now; sorry unix...
+*.kt text eol=crlf
+*.java text eol=crlf
+*.json text eol=crlf
+
+# Binary files, no touchey.
+*.png binary
+*.jpg binary

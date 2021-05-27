@@ -9,7 +9,7 @@ import net.minecraft.item.ItemGroup
 import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
 
-object Blocks {
+object PrimaBlocks {
     val COPPER_ORE = Block(FabricBlockSettings.of(Material.STONE).requiresTool().strength(3.0f))
     val TIN_ORE = Block(FabricBlockSettings.of(Material.STONE).requiresTool().strength(3.0f))
     val ZINC_ORE = Block(FabricBlockSettings.of(Material.STONE).requiresTool().strength(3.0f))
