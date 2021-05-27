@@ -12,6 +12,6 @@ object Items {
     val BOW_DRILL = Item(FabricItemSettings().group(ItemGroup.TOOLS).maxDamage(100).rarity(Rarity.COMMON))
 
     fun register() {
-        Registry.register(Registry.ITEM, Identifier("meltec", "bow_drill"), BOW_DRILL)
+        Registry.register(Registry.ITEM, Identifier("prima_materia", "bow_drill"), BOW_DRILL)
     }
 }
