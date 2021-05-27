@@ -4,7 +4,9 @@
   "package": "io.meltec.prima.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "DefaultBiomeFeaturesMixin"
+    "DefaultBiomeFeaturesMixin",
+    "ChunkGeneratorMixin",
+    "ChunkGeneratorSettingsMixin"
   ],
   "client": [
 
