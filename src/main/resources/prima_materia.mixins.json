@@ -6,7 +6,8 @@
   "mixins": [
     "DefaultBiomeFeaturesMixin",
     "ChunkGeneratorMixin",
-    "ChunkGeneratorSettingsMixin"
+    "ChunkGeneratorSettingsMixin",
+    "SkyPropertiesMixin"
   ],
   "client": [
 
