@@ -5,4 +5,4 @@ we aim to vastly change the gameplay and progression of Minecraft.
 
 ## License
 
-[MIT](https://github.com/KingCyrus20/Prima-Materia/blob/master/LICENSE.md)
+[MIT](https://github.com/KingCyrus20/Prima-Materia/blob/master/LICENSE)
