@@ -7,7 +7,6 @@ import net.fabricmc.fabric.api.item.v1.FabricItemSettings
 import net.minecraft.block.Blocks
 import net.minecraft.client.item.TooltipContext
 import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.item.ItemUsageContext
 import net.minecraft.item.ToolItem
@@ -26,21 +25,26 @@ object BowDrillItem : ToolItem(ToolMaterials.WOOD, FabricItemSettings().maxDamag
     override fun getMaxUseTime(stack: ItemStack) = 60
     override fun getUseAction(stack: ItemStack) = UseAction.BOW
 
-    @OptIn(ExperimentalContracts::class)
     override fun finishUsing(stack: ItemStack, world: World, user: LivingEntity): ItemStack {
-        val hit = user.raycast(3.0, 0.0f, true)
+        val fireLocation = user.getBlockAboveCursor() ?: return stack
 
-        if (hit.isBlockHitResult()) {
-            // TODO: Check if it is the same block
-            val fireLocation = hit.blockPos.up()
-            if (fireLocation.isInFrontOf(user) && world.canSetBlock(fireLocation)) {
-                world.setBlockState(fireLocation, Blocks.FIRE.defaultState)
-            }
-
-            stack.damage(1, user) { e -> e.sendToolBreakStatus(e.activeHand) }
+        if (fireLocation.isInFrontOf(user) && world.canSetBlock(fireLocation)) {
+            world.setBlockState(fireLocation, Blocks.FIRE.defaultState)
         }
 
+        stack.damage(1, user) { e -> e.sendToolBreakStatus(e.activeHand) }
         return stack
+    }
+
+    override fun usageTick(world: World, user: LivingEntity, stack: ItemStack, remainingUseTicks: Int) {
+        if (user.getBlockAboveCursor()?.isInFrontOf(user) != true) {
+            user.clearActiveItem()
+        }
+    }
+
+    @OptIn(ExperimentalContracts::class)
+    private fun LivingEntity.getBlockAboveCursor(): BlockPos? {
+        return with(raycast(3.0, 0.0f, true)) { if (isBlockHitResult()) blockPos.up() else null }
     }
 
     override fun useOnBlock(context: ItemUsageContext): ActionResult {
