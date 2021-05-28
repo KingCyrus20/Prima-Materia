@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "prima_materia:glider_left_wing"
+    },
+    {
+      "item": "prima_materia:glider_right_wing"
+    }
+  ],
+  "result": {
+    "item": "prima_materia:glider"
+  }
+}

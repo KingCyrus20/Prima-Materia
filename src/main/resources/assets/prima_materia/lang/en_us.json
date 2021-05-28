@@ -1,7 +1,14 @@
 {
   "item.prima_materia.bow_drill": "Bow Drill",
   "item.prima_materia.bow_drill.tooltip": "Starts fires on flammable blocks using tinder.",
+  "item.prima_materia.glider_left_wing": "Left Glider Wing",
+  "item.prima_materia.glider_right_wing": "Right Glider Wing",
+  "item.prima_materia.glider": "Glider",
+  "item.prima_materia.glider.tooltip": "Allows you to glide slowly.",
   "block.prima_materia.copper_ore": "Native Copper Ore",
   "block.prima_materia.tin_ore": "Cassiterite Ore",
-  "block.prima_materia.zinc_ore": "Zinc Ore"
+  "block.prima_materia.zinc_ore": "Zinc Ore",
+  "itemGroup.prima_materia.general": "Prima Materia General",
+  "itemGroup.prima_materia.tool": "Prima Materia Tools",
+  "itemGroup.prima_materia.equippable": "Prima Materia Equipment"
 }
