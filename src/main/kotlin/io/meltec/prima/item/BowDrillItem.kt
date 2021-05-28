@@ -1,4 +1,4 @@
-package io.meltec.prima
+package io.meltec.prima.item
 
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
