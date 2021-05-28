@@ -6,14 +6,13 @@
   "mixins": [
     "ChunkGeneratorMixin",
     "ChunkGeneratorSettingsMixin",
-    "SkyPropertiesMixin",
-    "GenerationShapeConfigMixin"
+    "GenerationShapeConfigMixin",
+    "HeldItemRendererMixin",
+    "SkyPropertiesMixin"
   ],
   "client": [
-
   ],
   "server": [
-
   ],
   "injectors": {
     "defaultRequire": 1

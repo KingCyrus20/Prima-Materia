@@ -23,7 +23,6 @@ import kotlin.contracts.ExperimentalContracts
 /** Starts fires using tinder and patience. */
 object BowDrillItem : ToolItem(ToolMaterials.WOOD, FabricItemSettings().maxDamage(10).group(PrimaItems.PRIMARY_GROUP)) {
     override fun getMaxUseTime(stack: ItemStack) = 60
-    override fun getUseAction(stack: ItemStack) = UseAction.BOW
 
     override fun finishUsing(stack: ItemStack, world: World, user: LivingEntity): ItemStack {
         val fireLocation = user.getBlockAboveCursor() ?: return stack
