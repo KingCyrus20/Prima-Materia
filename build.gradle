@@ -97,4 +97,8 @@ publishing {
     }
 }
 
+minecraft {
+    accessWidener = file("src/main/resources/prima_materia.accesswidener")
+}
+
 compileKotlin.kotlinOptions.jvmTarget = "1.8"

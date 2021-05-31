@@ -36,7 +36,6 @@
   "suggests": {
     "flamingo": "*"
   },
-  "mixins": [
-    "prima_materia.mixins.json"
-  ]
+  "mixins": [ "prima_materia.mixins.json" ],
+  "accessWidener": "prima_materia.accesswidener"
 }

@@ -4,9 +4,6 @@
   "package": "io.meltec.prima.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "ChunkGeneratorMixin",
-    "ChunkGeneratorSettingsMixin",
-    "GenerationShapeConfigMixin",
     "HeldItemRendererMixin",
     "SkyPropertiesMixin"
   ],

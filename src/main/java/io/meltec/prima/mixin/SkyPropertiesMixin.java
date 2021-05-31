@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(SkyProperties.class)
-public abstract class SkyPropertiesMixin{
+public abstract class SkyPropertiesMixin {
     @Shadow
     private float cloudsHeight;
     @Shadow
