@@ -27,15 +27,15 @@ data class EllipsoidOreClusterFeatureConfig(
 ) : FeatureConfig {
   companion object {
     val CODEC =
-        RecordCodecBuilder.create<EllipsoidOreClusterFeatureConfig> {
-          it.group(
+        RecordCodecBuilder.create<EllipsoidOreClusterFeatureConfig> { inst ->
+          inst.group(
                   BlockState.CODEC.fieldOf("state").forGetter { it.state },
                   Codec.INT.fieldOf("xRadius").forGetter { it.xRadius },
                   Codec.INT.fieldOf("yRadius").forGetter { it.yRadius },
                   Codec.INT.fieldOf("zRadius").forGetter { it.zRadius },
                   Codec.DOUBLE.fieldOf("coreThreshold").forGetter { it.coreThreshold },
                   Codec.DOUBLE.fieldOf("edgeProbability").forGetter { it.edgeProbability })
-              .apply(it, ::EllipsoidOreClusterFeatureConfig)
+              .apply(inst, ::EllipsoidOreClusterFeatureConfig)
         }
   }
 }
