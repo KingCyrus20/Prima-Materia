@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SL ",
+    "SLL",
+    "SSS"
+  ],
+  "key": {
+    "L": {
+      "tag": "minecraft:leather"
+    },
+    "S": {
+      "tag": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "prima_materia:glider_right_wing"
+  }
+}
