@@ -8,7 +8,9 @@ import net.minecraft.util.hit.HitResult
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.Vec3i
 
-class PrimaIdentifier(path: String) : Identifier("prima_materia", path)
+const val PRIMA_NAMESPACE = "prima_materia"
+
+class PrimaIdentifier(path: String) : Identifier(PRIMA_NAMESPACE, path)
 
 @ExperimentalContracts
 fun HitResult.isBlockHitResult(): Boolean {
