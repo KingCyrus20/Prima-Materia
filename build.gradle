@@ -113,7 +113,7 @@ minecraft {
 compileKotlin.kotlinOptions.jvmTarget = "1.8"
 
 spotless {
-//    ratchetFrom 'origin/master'
+    ratchetFrom 'master'
 
     format 'misc', {
         // define the files to apply `misc` to
