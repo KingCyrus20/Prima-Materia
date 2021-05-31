@@ -8,11 +8,11 @@ import net.fabricmc.api.ModInitializer
 
 /** Primary entry point for the mod; mainly responsible for lots of registry additions. */
 object PrimaMateria : ModInitializer {
-    override fun onInitialize() {
-        PrimaFeatures.register()
-        PrimaItems.register()
-        PrimaBlocks.register()
-        PrimaOres.register()
-        PrimaWorldGen.register()
-    }
+  override fun onInitialize() {
+    PrimaFeatures.register()
+    PrimaItems.register()
+    PrimaBlocks.register()
+    PrimaOres.register()
+    PrimaWorldGen.register()
+  }
 }

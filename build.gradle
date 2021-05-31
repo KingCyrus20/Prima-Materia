@@ -14,10 +14,10 @@ group = project.maven_group
 
 repositories {
     // Add repositories to retrieve artifacts from in here.
-	// You should only use this when depending on other mods because
-	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
-	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
-	// for more information about repositories.
+    // You should only use this when depending on other mods because
+    // Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
+    // See https://docs.gradle.org/current/userguide/declaring_repositories.html
+    // for more information about repositories.
 }
 
 dependencies {
@@ -55,12 +55,12 @@ tasks.withType(JavaCompile) {
     it.options.encoding = "UTF-8"
 
     // The Minecraft launcher currently installs Java 8 for users, so your mod probably wants to target Java 8 too
-	// JDK 9 introduced a new way of specifying this that will make sure no newer classes or methods are used.
-	// We'll use that if it's available, but otherwise we'll use the older option.
-	def targetVersion = 8
-	if (JavaVersion.current().isJava9Compatible()) {
-		 it.options.release = targetVersion
-	}
+    // JDK 9 introduced a new way of specifying this that will make sure no newer classes or methods are used.
+    // We'll use that if it's available, but otherwise we'll use the older option.
+    def targetVersion = 8
+    if (JavaVersion.current().isJava9Compatible()) {
+        it.options.release = targetVersion
+    }
 }
 
 // Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
@@ -105,15 +105,14 @@ minecraft {
 compileKotlin.kotlinOptions.jvmTarget = "1.8"
 
 spotless {
-    ratchetFrom 'origin/master'
+//    ratchetFrom 'origin/master'
 
     format 'misc', {
         // define the files to apply `misc` to
         target '*.gradle', '*.md', '.gitignore'
 
-        // define the steps to apply to those files
         trimTrailingWhitespace()
-        indentWithTabs() // or spaces. Takes an integer argument if you don't like 4
+        indentWithSpaces()
         endWithNewline()
     }
     java {
