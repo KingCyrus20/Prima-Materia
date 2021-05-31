@@ -10,8 +10,8 @@
 
   "block.prima_materia.copper_ore": "Native Copper Ore",
   "block.prima_materia.tin_ore": "Cassiterite Ore",
-  "block.prima_materia.zinc_ore": "Zinc Ore",
-  "itemGroup.prima_materia.general": "Prima Materia General",
-  "itemGroup.prima_materia.tool": "Prima Materia Tools",
-  "itemGroup.prima_materia.equippable": "Prima Materia Equipment"
+  "block.prima_materia.zinc_ore": "Sphalerite Ore",
+  "itemGroup.prima_materia.general": "Prima Materia - General",
+  "itemGroup.prima_materia.tool": "Prima Materia - Tools",
+  "itemGroup.prima_materia.equippable": "Prima Materia - Equipment"
 }
