@@ -15,24 +15,24 @@ object PrimaOres {
   val ORE_COPPER_OVERWORLD =
       PrimaFeatures.PERLIN_ORE_CLUSTER
           .configure(
-              PerlinOreClusterFeatureConfig(PrimaBlocks.COPPER_ORE.defaultState, 40, 24, 0.2))
+              PerlinOreClusterFeatureConfig(PrimaBlocks.COPPER_ORE.defaultState, 64, 24, 0.2))
+          .applyChance(300)
           .decorate(Decorator.RANGE.configure(RangeDecoratorConfig(140, 0, 64)))
           .spreadHorizontally()
-          .applyChance(300)
 
   val ORE_TIN_OVERWORLD =
       PrimaFeatures.PERLIN_ORE_CLUSTER
-          .configure(PerlinOreClusterFeatureConfig(PrimaBlocks.TIN_ORE.defaultState, 48, 20, 0.3))
+          .configure(PerlinOreClusterFeatureConfig(PrimaBlocks.TIN_ORE.defaultState, 36, 20, 0.2))
+          .applyChance(400)
           .decorate(Decorator.RANGE.configure(RangeDecoratorConfig(140, 0, 64)))
           .spreadHorizontally()
-          .applyChance(400)
 
   val ORE_ZINC_OVERWORLD =
       PrimaFeatures.PERLIN_ORE_CLUSTER
-          .configure(PerlinOreClusterFeatureConfig(PrimaBlocks.ZINC_ORE.defaultState, 64, 24, 0.2))
+          .configure(PerlinOreClusterFeatureConfig(PrimaBlocks.ZINC_ORE.defaultState, 32, 24, 0.2))
+          .applyChance(400)
           .decorate(Decorator.RANGE.configure(RangeDecoratorConfig(140, 0, 64)))
           .spreadHorizontally()
-          .applyChance(400)
 
   @SuppressWarnings("deprecated")
   fun register() {

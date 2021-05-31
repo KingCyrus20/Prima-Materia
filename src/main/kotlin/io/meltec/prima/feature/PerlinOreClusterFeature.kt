@@ -26,14 +26,14 @@ data class PerlinOreClusterFeatureConfig(
 ) : FeatureConfig {
   companion object {
     val CODEC =
-        RecordCodecBuilder.create<PerlinOreClusterFeatureConfig> {
-          it.group(
+        RecordCodecBuilder.create<PerlinOreClusterFeatureConfig> { inst ->
+          inst.group(
                   BlockState.CODEC.fieldOf("state").forGetter { it.state },
                   Codec.INT.fieldOf("width").forGetter { it.width },
                   Codec.INT.fieldOf("height").forGetter { it.height },
                   Codec.DOUBLE.fieldOf("threshold").forGetter { it.threshold },
               )
-              .apply(it, ::PerlinOreClusterFeatureConfig)
+              .apply(inst, ::PerlinOreClusterFeatureConfig)
         }
   }
 }
