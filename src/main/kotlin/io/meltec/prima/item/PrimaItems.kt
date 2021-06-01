@@ -28,12 +28,16 @@ object PrimaItems {
   val GliderLeftWingItem = Item(FabricItemSettings().group(GENERAL_GROUP))
   val GliderRightWingItem = Item(FabricItemSettings().group(GENERAL_GROUP))
   val FLINT_SWORD =
-      SwordItem(FlintToolMaterial(), 5, 1.6f, FabricItemSettings().group(COMBAT_GROUP))
+      SwordItem(FlintToolMaterial(), 4, -2.4f, FabricItemSettings().group(COMBAT_GROUP))
+  val FLINT_PICKAXE =
+      PrimaPickaxeItem(FlintToolMaterial(), 2, -2.8f, FabricItemSettings().group(TOOL_GROUP))
 
   fun register() {
     Registry.register(Registry.ITEM, PrimaIdentifier("bow_drill"), BowDrillItem)
     Registry.register(Registry.ITEM, PrimaIdentifier("glider_left_wing"), GliderLeftWingItem)
     Registry.register(Registry.ITEM, PrimaIdentifier("glider_right_wing"), GliderRightWingItem)
     Registry.register(Registry.ITEM, PrimaIdentifier("glider"), GliderItem)
+    Registry.register(Registry.ITEM, PrimaIdentifier("flint_sword"), FLINT_SWORD)
+    Registry.register(Registry.ITEM, PrimaIdentifier("flint_pickaxe"), FLINT_PICKAXE)
   }
 }

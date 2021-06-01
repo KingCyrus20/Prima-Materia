@@ -7,11 +7,14 @@
   "item.prima_materia.glider_right_wing": "Right Glider Wing",
   "item.prima_materia.glider": "Glider",
   "item.prima_materia.glider.tooltip": "Allows you to glide slowly.",
+  "item.prima_materia.flint_sword": "Flint Sword",
+  "item.prima_materia.flint_pickaxe": "Flint Pickaxe",
 
   "block.prima_materia.copper_ore": "Native Copper Ore",
   "block.prima_materia.tin_ore": "Cassiterite Ore",
   "block.prima_materia.zinc_ore": "Sphalerite Ore",
   "itemGroup.prima_materia.general": "Prima Materia - General",
   "itemGroup.prima_materia.tool": "Prima Materia - Tools",
+  "itemGroup.prima_materia.combat": "Prima Materia - Combat",
   "itemGroup.prima_materia.equippable": "Prima Materia - Equipment"
 }
