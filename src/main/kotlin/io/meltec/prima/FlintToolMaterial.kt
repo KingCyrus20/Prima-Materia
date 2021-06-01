@@ -10,7 +10,7 @@ class FlintToolMaterial : ToolMaterial {
   }
 
   override fun getMiningSpeedMultiplier(): Float {
-    return 4.0f
+    return 3.0f
   }
 
   override fun getAttackDamage(): Float {
@@ -18,7 +18,7 @@ class FlintToolMaterial : ToolMaterial {
   }
 
   override fun getMiningLevel(): Int {
-    return 1
+    return 0
   }
 
   override fun getEnchantability(): Int {
