@@ -25,6 +25,9 @@
         "adapter": "kotlin",
         "value": "io.meltec.prima.PrimaMateria"
       }
+    ],
+    "cardinal-components-item": [
+      "io.meltec.prima.component.PrimaComponents"
     ]
   },
   "depends": {
@@ -37,5 +40,10 @@
     "flamingo": "*"
   },
   "mixins": [ "prima_materia.mixins.json" ],
-  "accessWidener": "prima_materia.accesswidener"
+  "accessWidener": "prima_materia.accesswidener",
+  "custom": {
+    "cardinal-components": [
+      "prima_materia:quality"
+    ]
+  }
 }

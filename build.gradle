@@ -22,6 +22,11 @@ repositories {
     maven {
         url = "https://maven.theillusivec4.top"
     }
+
+    maven {
+        name = "Ladysnake Mods"
+        url = 'https://ladysnake.jfrog.io/artifactory/mods'
+    }
 }
 
 dependencies {
@@ -38,6 +43,12 @@ dependencies {
     // Caelus API for elytra alternatives
     modImplementation "top.theillusivec4.caelus:caelus-fabric:${project.caelus_version}"
     include "top.theillusivec4.caelus:caelus-fabric:${project.caelus_version}"
+
+    // Cardinal Components API for adding external data (such as quality) to objects
+    modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:${project.cc_version}"
+    include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:${project.cc_version}"
+    modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-item:${project.cc_item_version}"
+    include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-item:${project.cc_item_version}"
 
     // Wavefront OBJ
     modCompile "de.javagl:obj:${project.obj_version}"
