@@ -1,5 +1,6 @@
 package io.meltec.prima.client.model
 
+import de.javagl.obj.ObjReader
 import io.meltec.prima.util.PRIMA_NAMESPACE
 import net.fabricmc.fabric.api.client.model.ModelProviderContext
 import net.fabricmc.fabric.api.client.model.ModelResourceProvider
@@ -24,7 +25,9 @@ class PrimaObjModelResourceProvider(private val resourceManager: ResourceManager
     // TODO: Implement obj loading
     logger.info("Processed $qualifiedId in unimplemented obj loader")
 
-    return null
+    val obj = ObjReader.read(resourceManager.getResource(qualifiedId).inputStream)
+
+    return PrimaObjUnbakedModel(obj)
   }
 
   companion object {

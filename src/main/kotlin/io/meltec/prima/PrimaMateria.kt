@@ -1,10 +1,10 @@
 package io.meltec.prima
 
 import io.meltec.prima.client.model.PrimaModels
+import io.meltec.prima.item.PrimaItems
 import io.meltec.prima.worldgen.PrimaFeatures
 import io.meltec.prima.worldgen.PrimaOres
 import io.meltec.prima.worldgen.PrimaWorldGen
-import io.meltec.prima.item.PrimaItems
 import net.fabricmc.api.ModInitializer
 
 /** Primary entry point for the mod; mainly responsible for lots of registry additions. */
