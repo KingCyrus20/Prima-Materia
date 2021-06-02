@@ -44,9 +44,7 @@ class PrimaObjBakedModel(private val mesh: Mesh, private val sprite: Sprite) :
     return mutableListOf()
   }
 
-  override fun useAmbientOcclusion(): Boolean {
-    return true
-  }
+  override fun useAmbientOcclusion() = true
 
   override fun hasDepth() = false
 

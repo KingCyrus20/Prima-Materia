@@ -5,6 +5,8 @@ import io.meltec.prima.util.PRIMA_NAMESPACE
 import net.fabricmc.fabric.api.client.model.ModelProviderContext
 import net.fabricmc.fabric.api.client.model.ModelResourceProvider
 import net.minecraft.client.render.model.UnbakedModel
+import net.minecraft.client.texture.SpriteAtlasTexture
+import net.minecraft.client.util.SpriteIdentifier
 import net.minecraft.resource.ResourceManager
 import net.minecraft.util.Identifier
 import org.apache.logging.log4j.LogManager
@@ -26,8 +28,11 @@ class PrimaObjModelResourceProvider(private val resourceManager: ResourceManager
     logger.info("Processed $qualifiedId in unimplemented obj loader")
 
     val obj = ObjReader.read(resourceManager.getResource(qualifiedId).inputStream)
+    // TODO: Figure out what the atlas is actually supposed to be
+    val atlasIdentifier = SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE
+    val spriteIdentifier = SpriteIdentifier(atlasIdentifier, resourceId)
 
-    return PrimaObjUnbakedModel(obj)
+    return PrimaObjUnbakedModel(spriteIdentifier, obj)
   }
 
   companion object {
