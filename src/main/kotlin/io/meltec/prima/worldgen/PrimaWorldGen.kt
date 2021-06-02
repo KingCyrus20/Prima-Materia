@@ -1,4 +1,4 @@
-package io.meltec.prima.feature
+package io.meltec.prima.worldgen
 
 import net.minecraft.block.Blocks
 import net.minecraft.client.world.GeneratorType

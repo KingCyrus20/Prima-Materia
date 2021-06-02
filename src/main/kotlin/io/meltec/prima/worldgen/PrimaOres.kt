@@ -1,4 +1,4 @@
-package io.meltec.prima.feature
+package io.meltec.prima.worldgen
 
 import io.meltec.prima.PrimaBlocks
 import io.meltec.prima.util.PrimaIdentifier

@@ -1,4 +1,4 @@
-package io.meltec.prima.feature
+package io.meltec.prima.worldgen
 
 import io.meltec.prima.util.PrimaIdentifier
 import net.minecraft.util.registry.Registry

@@ -1,4 +1,4 @@
-package io.meltec.prima.feature
+package io.meltec.prima.worldgen
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder

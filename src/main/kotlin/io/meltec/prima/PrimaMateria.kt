@@ -1,9 +1,9 @@
 package io.meltec.prima
 
 import io.meltec.prima.client.model.PrimaModels
-import io.meltec.prima.feature.PrimaFeatures
-import io.meltec.prima.feature.PrimaOres
-import io.meltec.prima.feature.PrimaWorldGen
+import io.meltec.prima.worldgen.PrimaFeatures
+import io.meltec.prima.worldgen.PrimaOres
+import io.meltec.prima.worldgen.PrimaWorldGen
 import io.meltec.prima.item.PrimaItems
 import net.fabricmc.api.ModInitializer
 
