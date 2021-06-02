@@ -7,10 +7,10 @@
   ],
   "key": {
     "L": {
-      "tag": "minecraft:leather"
+      "item": "minecraft:leather"
     },
     "S": {
-      "tag": "minecraft:stick"
+      "item": "minecraft:stick"
     }
   },
   "result": {
