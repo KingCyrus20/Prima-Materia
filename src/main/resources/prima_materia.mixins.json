@@ -6,7 +6,8 @@
   "mixins": [
     "HeldItemRendererMixin",
     "SkyPropertiesMixin",
-    "FireworkItemMixin"
+    "FireworkItemMixin",
+    "ItemStackMixin"
   ],
   "client": [
   ],
