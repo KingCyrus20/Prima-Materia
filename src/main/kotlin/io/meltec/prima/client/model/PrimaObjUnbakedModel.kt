@@ -1,6 +1,7 @@
 package io.meltec.prima.client.model
 
 import com.mojang.datafixers.util.Pair
+import de.javagl.obj.ObjFace
 import de.javagl.obj.ObjUtils
 import de.javagl.obj.ReadableObj
 import java.util.function.Function
@@ -34,38 +35,41 @@ class PrimaObjUnbakedModel(
       rotationContainer: ModelBakeSettings,
       modelId: Identifier
   ): BakedModel? {
-    val renderer =
-        with(RendererAccess.INSTANCE) {
-          if (!hasRenderer()) return null
-          renderer!!
-        }
-    // Make everything triangles
-    val objFile = ObjUtils.triangulate(objFile)
+    val renderer = RendererAccess.INSTANCE.renderer ?: return null
+    val hasNonQuad = objFile.faceIterator.asSequence().any { it.numVertices > 4 }
+    val objFile =
+        if (hasNonQuad) {
+          logger.warn("$modelId had a non-quad face triangulating")
+          // TODO: do this while processing faces instead of before
+          ObjUtils.triangulate(objFile)
+        } else objFile
     val sprite = textureGetter.apply(spriteIdentifier)
+    val mesh =
+        with(renderer.meshBuilder()) {
+          objFile.faceIterator.forEach { emitter.emitFace(it, objFile, sprite) }
+          build()
+        }
 
-    val meshBuilder = renderer.meshBuilder()
-    val emitter = meshBuilder.emitter
-
-    for (face in objFile.faceIterator) {
-      for ((index, vertex) in face.getIndexedVertexIterator(objFile)) {
-        emitter.vertex(index, vertex)
-      }
-      // Since we're using triangles in a quad view, add another vertex
-      emitter.vertex(face.numVertices, face.getVertexInfo(face.numVertices - 1, objFile))
-
-      val color = 0xFFFFFF
-      emitter.spriteColor(0, color, color, color, color)
-      emitter.spriteBake(0, sprite, MutableQuadView.BAKE_NORMALIZED)
-      emitter.emit()
-    }
-
-    return PrimaObjBakedModel(meshBuilder.build(), sprite)
+    return PrimaObjBakedModel(mesh, sprite)
   }
 
-  private fun QuadEmitter.vertex(index: Int, vertex: VertexInfo) {
+  // TODO: VertexInfo list is probably a ton of object allocation we can avoid
+  private fun QuadEmitter.emitFace(face: ObjFace, parent: ReadableObj, sprite: Sprite) {
+    val vertexList = face.getVertexList(parent)
+    vertexList.withIndex().forEach { (i, vertex) -> addVertex(i, vertex) }
+
+    // If we have a triangle, add another vertex to statisfy quad view
+    if (face.numVertices == 3) addVertex(3, vertexList[2])
+
+    spriteBake(0, sprite, MutableQuadView.BAKE_NORMALIZED)
+    emit()
+  }
+
+  private fun QuadEmitter.addVertex(index: Int, vertex: VertexInfo) {
     pos(index, vertex.coords)
     vertex.normal?.let { normal(index, it) }
     sprite(index, 0, vertex.texCoords ?: ZERO)
+    spriteColor(index, 0, 0xFFFFFF)
   }
 
   companion object {

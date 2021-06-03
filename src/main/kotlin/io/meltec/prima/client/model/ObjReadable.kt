@@ -21,6 +21,15 @@ fun ObjFace.getIndexedVertexIterator(obj: ReadableObj) =
       override fun next() = IndexedValue(++i, getVertexInfo(i, obj))
     }
 
+fun ObjFace.getVertexIterator(obj: ReadableObj) =
+    object : Iterator<VertexInfo> {
+      private var i = -1
+      override fun hasNext() = (i + 1) < numVertices
+      override fun next() = getVertexInfo(++i, obj)
+    }
+
+fun ObjFace.getVertexList(obj: ReadableObj) = getVertexIterator(obj).asSequence().toList()
+
 fun ObjFace.getVertexInfo(index: Int, obj: ReadableObj): VertexInfo {
   val vertex = obj.getVertex(getVertexIndex(index)).asVector3f()
   val normal =
