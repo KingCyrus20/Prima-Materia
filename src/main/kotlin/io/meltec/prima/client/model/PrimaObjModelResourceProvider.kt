@@ -24,8 +24,7 @@ class PrimaObjModelResourceProvider(private val resourceManager: ResourceManager
     if (!resourceManager.containsResource(qualifiedId)) return null
 
     // TODO: Figure out what the atlas is actually supposed to be
-    @Suppress("DEPRECATION")
-    val atlasIdentifier = SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE
+    @Suppress("DEPRECATION") val atlasIdentifier = SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE
 
     val spriteIdentifier = SpriteIdentifier(atlasIdentifier, resourceId)
     val primaObj = PrimaObj.read(resourceManager.getResource(qualifiedId).inputStream.reader())
