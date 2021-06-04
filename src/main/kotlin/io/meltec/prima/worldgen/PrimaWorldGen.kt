@@ -9,7 +9,7 @@ import net.minecraft.world.gen.chunk.*
 
 /** Registers world generation options. */
 object PrimaWorldGen {
-  val PRIMA_MATERIA =
+  private val PRIMA_MATERIA =
       object : GeneratorType("prima_materia") {
         override fun getChunkGenerator(
             biomeRegistry: Registry<Biome>,

@@ -8,7 +8,6 @@ import net.minecraft.client.texture.SpriteAtlasTexture
 import net.minecraft.client.util.SpriteIdentifier
 import net.minecraft.resource.ResourceManager
 import net.minecraft.util.Identifier
-import org.apache.logging.log4j.LogManager
 
 class PrimaObjModelResourceProvider(private val resourceManager: ResourceManager) :
     ModelResourceProvider {
@@ -32,7 +31,5 @@ class PrimaObjModelResourceProvider(private val resourceManager: ResourceManager
     return PrimaObjUnbakedModel(spriteIdentifier, primaObj)
   }
 
-  companion object {
-    private val logger = LogManager.getLogger()
-  }
+  companion object
 }

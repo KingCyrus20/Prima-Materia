@@ -34,7 +34,7 @@ data class PerlinOreClusterFeatureConfig(
                   Codec.DOUBLE.fieldOf("threshold").forGetter { it.threshold },
               )
               .apply(inst, ::PerlinOreClusterFeatureConfig)
-        }
+        }!!
   }
 }
 

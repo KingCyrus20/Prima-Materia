@@ -14,7 +14,6 @@ import net.minecraft.client.render.model.UnbakedModel
 import net.minecraft.client.texture.Sprite
 import net.minecraft.client.util.SpriteIdentifier
 import net.minecraft.util.Identifier
-import org.apache.logging.log4j.LogManager
 
 class PrimaObjUnbakedModel(
     private val spriteIdentifier: SpriteIdentifier,
@@ -69,7 +68,5 @@ class PrimaObjUnbakedModel(
     spriteColor(index, 0, 0xFFFFFF)
   }
 
-  companion object {
-    private val logger = LogManager.getLogger()
-  }
+  companion object
 }

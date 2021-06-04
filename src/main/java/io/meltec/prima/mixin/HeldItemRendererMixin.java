@@ -27,21 +27,21 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(HeldItemRenderer.class)
-public class HeldItemRendererMixin {
+public abstract class HeldItemRendererMixin {
   @Final @Shadow private MinecraftClient client;
 
   @Shadow
-  private void applyEquipOffset(MatrixStack matrices, Arm arm, float equipProgress) {}
+  protected abstract void applyEquipOffset(MatrixStack matrices, Arm arm, float equipProgress);
 
   @Shadow
-  public void renderItem(
+  public abstract void renderItem(
       LivingEntity entity,
       ItemStack stack,
       ModelTransformation.Mode renderMode,
       boolean leftHanded,
       MatrixStack matrices,
       VertexConsumerProvider vertexConsumers,
-      int light) {}
+      int light);
 
   @Inject(
       method =

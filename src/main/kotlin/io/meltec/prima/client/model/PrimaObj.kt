@@ -41,8 +41,8 @@ data class PrimaObj(
     private fun parseIntArray(s: String): List<IntArray> {
       return s.splitToSequence(" ")
           .drop(1)
-          .mapNotNull {
-            val ints = it.splitToSequence("/").mapNotNull { it.toIntOrNull() }.iterator()
+          .mapNotNull { vertexString ->
+            val ints = vertexString.splitToSequence("/").mapNotNull { it.toIntOrNull() }.iterator()
             // Wavefront OBJ can omit texCoords/normals so hard code 3 is not ideal
             IntArray(3) { ints.next() - 1 }
           }

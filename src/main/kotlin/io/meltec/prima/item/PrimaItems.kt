@@ -11,12 +11,13 @@ import net.minecraft.item.SwordItem
 import net.minecraft.util.registry.Registry
 
 object PrimaItems {
-  val GENERAL_GROUP: ItemGroup = FabricItemGroupBuilder.create(PrimaIdentifier("general")).build()
+  private val GENERAL_GROUP: ItemGroup =
+      FabricItemGroupBuilder.create(PrimaIdentifier("general")).build()
   val TOOL_GROUP: ItemGroup =
       FabricItemGroupBuilder.create(PrimaIdentifier("tool"))
           .icon { ItemStack(BowDrillItem) }
           .build()
-  val COMBAT_GROUP: ItemGroup =
+  private val COMBAT_GROUP: ItemGroup =
       FabricItemGroupBuilder.create(PrimaIdentifier("combat"))
           .icon { ItemStack(FLINT_SWORD) }
           .build()
@@ -25,11 +26,11 @@ object PrimaItems {
           .icon { ItemStack(GliderItem) }
           .build()
 
-  val GliderLeftWingItem = Item(FabricItemSettings().group(GENERAL_GROUP))
-  val GliderRightWingItem = Item(FabricItemSettings().group(GENERAL_GROUP))
-  val FLINT_SWORD =
+  private val GliderLeftWingItem = Item(FabricItemSettings().group(GENERAL_GROUP))
+  private val GliderRightWingItem = Item(FabricItemSettings().group(GENERAL_GROUP))
+  private val FLINT_SWORD =
       SwordItem(FlintToolMaterial(), 4, -2.4f, FabricItemSettings().group(COMBAT_GROUP))
-  val FLINT_PICKAXE =
+  private val FLINT_PICKAXE =
       PrimaPickaxeItem(FlintToolMaterial(), 2, -2.8f, FabricItemSettings().group(TOOL_GROUP))
 
   fun register() {

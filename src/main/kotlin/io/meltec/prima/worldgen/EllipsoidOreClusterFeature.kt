@@ -5,6 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder
 import java.util.*
 import kotlin.math.absoluteValue
 import kotlin.math.pow
+import kotlin.math.sqrt
 import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
 import net.minecraft.util.math.BlockPos
@@ -36,7 +37,7 @@ data class EllipsoidOreClusterFeatureConfig(
                   Codec.DOUBLE.fieldOf("coreThreshold").forGetter { it.coreThreshold },
                   Codec.DOUBLE.fieldOf("edgeProbability").forGetter { it.edgeProbability })
               .apply(inst, ::EllipsoidOreClusterFeatureConfig)
-        }
+        }!!
   }
 }
 
@@ -81,14 +82,14 @@ object EllipsoidOreClusterFeature :
    * Compute ellipsoid distance between the center of the ellipsoid and target; 0 - 1 is inside the
    * ellipsoid, >1 is outside.
    */
-  fun ellipsoid(
+  private fun ellipsoid(
       center: BlockPos,
       target: BlockPos,
       xRadius: Int,
       yRadius: Int,
       zRadius: Int
   ): Double {
-    return Math.sqrt(
+    return sqrt(
         (center.x - target.x).absoluteValue.toDouble().pow(2) / (xRadius * xRadius) +
             (center.y - target.y).absoluteValue.toDouble().pow(2) / (yRadius * yRadius) +
             (center.z - target.z).absoluteValue.toDouble().pow(2) / (zRadius * zRadius))

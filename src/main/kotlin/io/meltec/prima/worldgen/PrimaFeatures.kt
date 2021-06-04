@@ -4,7 +4,7 @@ import io.meltec.prima.util.PrimaIdentifier
 import net.minecraft.util.registry.Registry
 
 object PrimaFeatures {
-  val ELLIPSOID_ORE_CLUSTER = EllipsoidOreClusterFeature
+  private val ELLIPSOID_ORE_CLUSTER = EllipsoidOreClusterFeature
   val PERLIN_ORE_CLUSTER = PerlinOreClusterFeature
 
   fun register() {

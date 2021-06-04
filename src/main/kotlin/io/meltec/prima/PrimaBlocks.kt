@@ -13,30 +13,30 @@ import net.minecraft.util.registry.Registry
 object PrimaBlocks {
   val COPPER_ORE = createOre(1)
   val TIN_ORE = createOre(1)
-  val CHALCOCITE_ORE = createOre(1)
+  private val CHALCOCITE_ORE = createOre(1)
   val ZINC_ORE = createOre(1)
-  val GALENA_ORE = createOre(1)
-  val BISMUTHINITE_ORE = createOre(1)
-  val ORPIMENT_ORE = createOre(2)
-  val STIBNITE_ORE = createOre(2)
-  val BORAX_ORE = createOre(2)
-  val MAGNESITE_ORE = createOre(3)
-  val APATITE_ORE = createOre(3)
-  val HEMATITE_ORE = createOre(2)
-  val MAGNETITE_ORE = createOre(2)
-  val PRIMA_GOLD_ORE = createOre(1)
-  val CINNABAR_ORE = createOre(3)
-  val SILVER_ORE = createOre(1)
-  val SALTPETER_ORE = createOre(2)
-  val ROCK_SALT_ORE = createOre(1)
-  val CORUNDUM_ORE = createOre(3)
-  val BAUXITE_ORE = createOre(2)
-  val ACANTHITE_ORE = createOre(2)
-  val PYRITE_ORE = createOre(2)
-  val CHALCOPYRITE_ORE = createOre(2)
-  val ANTHRACITE_ORE = createOre(2)
-  val BITUMINOUS_COAL_ORE = createOre(1)
-  val LIGNITE_ORE = createOre(1)
+  private val GALENA_ORE = createOre(1)
+  private val BISMUTHINITE_ORE = createOre(1)
+  private val ORPIMENT_ORE = createOre(2)
+  private val STIBNITE_ORE = createOre(2)
+  private val BORAX_ORE = createOre(2)
+  private val MAGNESITE_ORE = createOre(3)
+  private val APATITE_ORE = createOre(3)
+  private val HEMATITE_ORE = createOre(2)
+  private val MAGNETITE_ORE = createOre(2)
+  private val PRIMA_GOLD_ORE = createOre(1)
+  private val CINNABAR_ORE = createOre(3)
+  private val SILVER_ORE = createOre(1)
+  private val SALTPETER_ORE = createOre(2)
+  private val ROCK_SALT_ORE = createOre(1)
+  private val CORUNDUM_ORE = createOre(3)
+  private val BAUXITE_ORE = createOre(2)
+  private val ACANTHITE_ORE = createOre(2)
+  private val PYRITE_ORE = createOre(2)
+  private val CHALCOPYRITE_ORE = createOre(2)
+  private val ANTHRACITE_ORE = createOre(2)
+  private val BITUMINOUS_COAL_ORE = createOre(1)
+  private val LIGNITE_ORE = createOre(1)
 
   fun register() {
     registerBlock("copper_ore", COPPER_ORE)
@@ -67,7 +67,7 @@ object PrimaBlocks {
     registerBlock("lignite_ore", LIGNITE_ORE)
   }
 
-  fun createOre(miningLevel: Int): Block {
+  private fun createOre(miningLevel: Int): Block {
     return Block(
         FabricBlockSettings.of(Material.STONE)
             .requiresTool()
@@ -75,7 +75,7 @@ object PrimaBlocks {
             .breakByTool(FabricToolTags.PICKAXES, miningLevel))
   }
 
-  fun registerBlock(identifier: String, oreBlock: Block) {
+  private fun registerBlock(identifier: String, oreBlock: Block) {
     Registry.register(Registry.BLOCK, PrimaIdentifier(identifier), oreBlock)
     Registry.register(
         Registry.ITEM,

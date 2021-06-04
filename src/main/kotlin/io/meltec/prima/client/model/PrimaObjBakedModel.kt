@@ -54,7 +54,7 @@ class PrimaObjBakedModel(private val mesh: Mesh, private val sprite: Sprite) :
 
   override fun getSprite() = sprite
 
-  override fun getTransformation() = ModelTransformation.NONE
+  override fun getTransformation() = ModelTransformation.NONE!!
 
-  override fun getOverrides() = ModelOverrideList.EMPTY
+  override fun getOverrides() = ModelOverrideList.EMPTY!!
 }
