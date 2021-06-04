@@ -23,13 +23,12 @@ class PrimaObjModelResourceProvider(private val resourceManager: ResourceManager
     val qualifiedId = with(resourceId) { Identifier(namespace, "models/$path.obj") }
     if (!resourceManager.containsResource(qualifiedId)) return null
 
-    // TODO: Implement obj loading
-    logger.info("Processed $qualifiedId in unimplemented obj loader")
-
-    val primaObj = PrimaObj.read(resourceManager.getResource(qualifiedId).inputStream.reader())
     // TODO: Figure out what the atlas is actually supposed to be
+    @Suppress("DEPRECATION")
     val atlasIdentifier = SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE
+
     val spriteIdentifier = SpriteIdentifier(atlasIdentifier, resourceId)
+    val primaObj = PrimaObj.read(resourceManager.getResource(qualifiedId).inputStream.reader())
 
     return PrimaObjUnbakedModel(spriteIdentifier, primaObj)
   }

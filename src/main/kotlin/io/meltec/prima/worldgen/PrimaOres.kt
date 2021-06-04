@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION") // BiomeModifications opt-in, sadly no better way
+
 package io.meltec.prima.worldgen
 
 import io.meltec.prima.PrimaBlocks
@@ -34,7 +36,6 @@ object PrimaOres {
           .decorate(Decorator.RANGE.configure(RangeDecoratorConfig(140, 0, 64)))
           .spreadHorizontally()
 
-  @SuppressWarnings("deprecated")
   fun register() {
     val oreCopperOverworld =
         RegistryKey.of(
