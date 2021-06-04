@@ -1,11 +1,10 @@
 package io.meltec.prima.client.model
 
 import com.mojang.datafixers.util.Pair
-import de.javagl.obj.ObjFace
-import de.javagl.obj.ObjUtils
-import de.javagl.obj.ReadableObj
 import java.util.function.Function
 import net.fabricmc.fabric.api.renderer.v1.RendererAccess
+import net.fabricmc.fabric.api.renderer.v1.mesh.Mesh
+import net.fabricmc.fabric.api.renderer.v1.mesh.MeshBuilder
 import net.fabricmc.fabric.api.renderer.v1.mesh.MutableQuadView
 import net.fabricmc.fabric.api.renderer.v1.mesh.QuadEmitter
 import net.minecraft.client.render.model.BakedModel
@@ -15,12 +14,11 @@ import net.minecraft.client.render.model.UnbakedModel
 import net.minecraft.client.texture.Sprite
 import net.minecraft.client.util.SpriteIdentifier
 import net.minecraft.util.Identifier
-import net.minecraft.util.math.Vec2f.ZERO
 import org.apache.logging.log4j.LogManager
 
 class PrimaObjUnbakedModel(
     private val spriteIdentifier: SpriteIdentifier,
-    private val objFile: ReadableObj
+    private val primaObj: PrimaObj
 ) : UnbakedModel {
   override fun getModelDependencies() = emptyList<Identifier>()
 
@@ -36,39 +34,38 @@ class PrimaObjUnbakedModel(
       modelId: Identifier
   ): BakedModel? {
     val renderer = RendererAccess.INSTANCE.renderer ?: return null
-    val hasNonQuad = objFile.faceIterator.asSequence().any { it.numVertices > 4 }
-    val objFile =
-        if (hasNonQuad) {
-          logger.warn("$modelId had a non-quad face triangulating")
-          // TODO: do this while processing faces instead of before
-          ObjUtils.triangulate(objFile)
-        } else objFile
     val sprite = textureGetter.apply(spriteIdentifier)
-    val mesh =
-        with(renderer.meshBuilder()) {
-          objFile.faceIterator.forEach { emitter.emitFace(it, objFile, sprite) }
-          build()
-        }
+
+    val mesh = renderer.meshBuilder().createMeshFrom(primaObj, sprite)
 
     return PrimaObjBakedModel(mesh, sprite)
   }
 
-  // TODO: VertexInfo list is probably a ton of object allocation we can avoid
-  private fun QuadEmitter.emitFace(face: ObjFace, parent: ReadableObj, sprite: Sprite) {
-    val vertexList = face.getVertexList(parent)
-    vertexList.withIndex().forEach { (i, vertex) -> addVertex(i, vertex) }
-
-    // If we have a triangle, add another vertex to statisfy quad view
-    if (face.numVertices == 3) addVertex(3, vertexList[2])
-
-    spriteBake(0, sprite, MutableQuadView.BAKE_NORMALIZED)
-    emit()
+  private fun MeshBuilder.createMeshFrom(model: PrimaObj, sprite: Sprite): Mesh {
+    emitter.createMeshFrom(model, sprite)
+    return build()
   }
 
-  private fun QuadEmitter.addVertex(index: Int, vertex: VertexInfo) {
-    pos(index, vertex.coords)
-    vertex.normal?.let { normal(index, it) }
-    sprite(index, 0, vertex.texCoords ?: ZERO)
+  private fun QuadEmitter.createMeshFrom(model: PrimaObj, sprite: Sprite) {
+    for (face in model.faces) {
+      for ((index, vertex) in face.withIndex()) createVertexFrom(primaObj, index, vertex)
+
+      // If we have a triangle, add another vertex to statisfy quad view
+      if (face.size == 3) createVertexFrom(primaObj, 3, face[2])
+
+      spriteBake(0, sprite, MutableQuadView.BAKE_NORMALIZED or MutableQuadView.BAKE_FLIP_V)
+      emit()
+    }
+  }
+
+  private fun QuadEmitter.createVertexFrom(model: PrimaObj, index: Int, vertex: IntArray) {
+    val (position, texCoord, normal) = vertex
+    val (x, y, z) = model.positions[position]
+    val (u, v) = model.texCoords[texCoord]
+    val (nx, ny, nz) = model.normals[normal]
+    pos(index, x, y, z)
+    sprite(index, 0, u, v)
+    normal(index, nx, ny, nz)
     spriteColor(index, 0, 0xFFFFFF)
   }
 

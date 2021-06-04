@@ -1,6 +1,5 @@
 package io.meltec.prima.client.model
 
-import de.javagl.obj.ObjReader
 import io.meltec.prima.util.PRIMA_NAMESPACE
 import net.fabricmc.fabric.api.client.model.ModelProviderContext
 import net.fabricmc.fabric.api.client.model.ModelResourceProvider
@@ -27,12 +26,12 @@ class PrimaObjModelResourceProvider(private val resourceManager: ResourceManager
     // TODO: Implement obj loading
     logger.info("Processed $qualifiedId in unimplemented obj loader")
 
-    val obj = ObjReader.read(resourceManager.getResource(qualifiedId).inputStream)
+    val primaObj = PrimaObj.read(resourceManager.getResource(qualifiedId).inputStream.reader())
     // TODO: Figure out what the atlas is actually supposed to be
     val atlasIdentifier = SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE
     val spriteIdentifier = SpriteIdentifier(atlasIdentifier, resourceId)
 
-    return PrimaObjUnbakedModel(spriteIdentifier, obj)
+    return PrimaObjUnbakedModel(spriteIdentifier, primaObj)
   }
 
   companion object {
