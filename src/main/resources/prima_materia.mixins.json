@@ -4,6 +4,7 @@
   "package": "io.meltec.prima.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "CraftingInventoryAccessor",
     "FireworkItemMixin",
     "HeldItemRendererMixin",
     "SkyPropertiesMixin"

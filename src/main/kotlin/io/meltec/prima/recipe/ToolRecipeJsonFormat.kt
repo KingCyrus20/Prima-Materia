@@ -7,4 +7,4 @@ class ToolRecipeJsonFormat(
     val inputB: JsonObject,
     val inputC: JsonObject,
     val outputItem: String
-) {}
+)

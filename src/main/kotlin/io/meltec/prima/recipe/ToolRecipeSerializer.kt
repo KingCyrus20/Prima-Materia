@@ -2,6 +2,7 @@ package io.meltec.prima.recipe
 
 import com.google.gson.Gson
 import com.google.gson.JsonObject
+import io.meltec.prima.util.PrimaIdentifier
 import net.minecraft.item.ItemStack
 import net.minecraft.network.PacketByteBuf
 import net.minecraft.recipe.Ingredient
@@ -9,7 +10,7 @@ import net.minecraft.recipe.RecipeSerializer
 import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
 
-class ToolRecipeSerializer : RecipeSerializer<PickaxeRecipe> {
+object ToolRecipeSerializer : RecipeSerializer<PickaxeRecipe> {
   override fun read(id: Identifier, json: JsonObject): PickaxeRecipe {
     val recipeJson = Gson().fromJson(json, ToolRecipeJsonFormat::class.java)
     val inputA = Ingredient.fromJson(recipeJson.inputA)
@@ -35,8 +36,5 @@ class ToolRecipeSerializer : RecipeSerializer<PickaxeRecipe> {
     buf.writeItemStack(recipe.output)
   }
 
-  companion object {
-    val INSTANCE = ToolRecipeSerializer()
-    val ID = Identifier("prima_materia:tool_recipe")
-  }
+  val ID = PrimaIdentifier("tool_recipe")
 }

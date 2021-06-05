@@ -11,4 +11,4 @@ class PartReplaceRecipe(
     group: String?,
     output: ItemStack?,
     input: DefaultedList<Ingredient>?
-) : ShapelessRecipe(id, group, output, input) {}
+) : ShapelessRecipe(id, group, output, input)

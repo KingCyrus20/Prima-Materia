@@ -4,7 +4,6 @@ import net.minecraft.client.item.TooltipContext
 import net.minecraft.item.ItemStack
 import net.minecraft.item.PickaxeItem
 import net.minecraft.text.Text
-import net.minecraft.util.registry.Registry
 import net.minecraft.world.World
 
 class PrimaPickaxeItem(
