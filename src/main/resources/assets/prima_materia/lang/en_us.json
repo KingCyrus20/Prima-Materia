@@ -8,8 +8,12 @@
   "item.prima_materia.glider_right_wing": "Right Glider Wing",
   "item.prima_materia.glider": "Glider",
   "item.prima_materia.glider.tooltip": "Allows you to glide slowly.",
+  "item.prima_materia.leather_binding": "Leather Binding",
+  "item.prima_materia.string_binding": "String Binding",
+  "item.prima_materia.wood_handle": "Wood Handle",
+  "item.prima_materia.flint_pickaxe_head": "Flint Pickaxe Head",
   "item.prima_materia.flint_sword": "Flint Sword",
-  "item.prima_materia.flint_pickaxe": "Flint Pickaxe",
+  "item.prima_materia.prima_pickaxe": "Pickaxe",
 
   "block.prima_materia.copper_ore": "Native Copper Ore",
   "block.prima_materia.tin_ore": "Cassiterite Ore",

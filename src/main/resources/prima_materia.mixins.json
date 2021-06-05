@@ -4,10 +4,9 @@
   "package": "io.meltec.prima.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "HeldItemRendererMixin",
-    "SkyPropertiesMixin",
     "FireworkItemMixin",
-    "ItemStackMixin"
+    "HeldItemRendererMixin",
+    "SkyPropertiesMixin"
   ],
   "client": [
   ],

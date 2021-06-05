@@ -2,6 +2,7 @@ package io.meltec.prima
 
 import io.meltec.prima.client.model.PrimaModels
 import io.meltec.prima.item.PrimaItems
+import io.meltec.prima.recipe.PrimaRecipes
 import io.meltec.prima.worldgen.PrimaFeatures
 import io.meltec.prima.worldgen.PrimaOres
 import io.meltec.prima.worldgen.PrimaWorldGen
@@ -16,5 +17,6 @@ object PrimaMateria : ModInitializer {
     PrimaBlocks.register()
     PrimaOres.register()
     PrimaWorldGen.register()
+    PrimaRecipes.register()
   }
 }
