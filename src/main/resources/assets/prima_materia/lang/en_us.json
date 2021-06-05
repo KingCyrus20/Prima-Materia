@@ -1,6 +1,5 @@
 {
   "generator.prima_materia": "Prima Vanilla",
-  "generator.prima_materia_noise": "Prima Custom",
 
   "item.prima_materia.bow_drill": "Bow Drill",
   "item.prima_materia.bow_drill.tooltip": "Starts fires on flammable blocks using tinder.",

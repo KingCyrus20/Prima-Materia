@@ -50,19 +50,6 @@ object PrimaWorldGen {
         }
       }
 
-  private val CUSTOM_PRIMA_MATERIA =
-      object : GeneratorType("prima_materia_noise") {
-        override fun getChunkGenerator(
-            biomeRegistry: Registry<Biome>,
-            chunkGeneratorSettingsRegistry: Registry<ChunkGeneratorSettings>,
-            seed: Long
-        ): ChunkGenerator {
-          val registry = PrimaBiomes.convert(biomeRegistry)
-          return PrimaChunkGenerator(
-              PrimaBiomes.ConvertingVanillaBiomeSource(seed, true, registry), seed)
-        }
-      }
-
   fun register() {
     // Register the custom converting biome source.
     Registry.register(
@@ -73,10 +60,8 @@ object PrimaWorldGen {
     // Register the chunk generator so it can be saved/loaded.
     Registry.register(
         Registry.CHUNK_GENERATOR, PrimaIdentifier("vanilla"), PrimaDelegatingChunkGenerator.CODEC)
-    Registry.register(Registry.CHUNK_GENERATOR, PrimaIdentifier("noise"), PrimaChunkGenerator.CODEC)
 
     // Add the chunk generator to the default list of chunk generators.
     GeneratorType.VALUES.add(DELEGATING_PRIMA_MATERIA)
-    GeneratorType.VALUES.add(CUSTOM_PRIMA_MATERIA)
   }
 }

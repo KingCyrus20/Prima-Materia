@@ -58,7 +58,7 @@ object PrimaBiomes {
         .spawnSettings(biome.spawnSettings)
         .generationSettings(newGenSettings.build())
         .depth(biome.depth)
-        .scale(biome.scale * 1.1f)
+        .scale(biome.scale)
         .build()
   }
 
