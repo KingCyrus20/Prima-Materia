@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import java.util.*
 import net.minecraft.block.BlockState
+import net.minecraft.block.Blocks
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.noise.OctavePerlinNoiseSampler
 import net.minecraft.world.StructureWorldAccess
@@ -64,7 +65,7 @@ object PerlinOreClusterFeature :
       for (y in startPosition.y..endPosition.y) {
         for (z in startPosition.z..endPosition.z) {
           val position = BlockPos(x, y, z)
-          // if (world.getBlockState(position).block != Blocks.STONE) continue
+          if (world.getBlockState(position).block != Blocks.STONE) continue
           val distance =
               pos.getManhattanDistance(position).toDouble() /
                   config.width.coerceAtLeast(config.height)
