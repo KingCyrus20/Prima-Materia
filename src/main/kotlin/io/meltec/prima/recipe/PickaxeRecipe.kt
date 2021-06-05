@@ -47,6 +47,10 @@ class PickaxeRecipe(
   }
 
   private fun checkColumn(inv: CraftingInventory, offset: Int): Boolean {
+    for (i in 0..8) if (i != offset && i != 3 + offset && i != 6 + offset)
+        if (!inv.getStack(i).isEmpty) {
+          return false
+        }
     return inv.getStack(offset).item is PickaxeHeadItem &&
         inv.getStack(3 + offset).item is ToolBindingItem &&
         inv.getStack(6 + offset).item is ToolHandleItem
