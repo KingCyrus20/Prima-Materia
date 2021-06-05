@@ -7,13 +7,13 @@ import net.minecraft.text.Text
 import net.minecraft.world.World
 
 class PrimaPickaxeItem(
-    var head: PickaxeHeadItem,
-    var binding: ToolBindingItem,
-    var handle: ToolHandleItem,
+    private val head: PickaxeHeadItem,
+    private val binding: ToolBindingItem,
+    private val handle: ToolHandleItem,
     attackSpeed: Float,
     settings: Settings
 ) : PickaxeItem(head.toolMaterial, head.toolMaterial.attackDamage.toInt(), attackSpeed, settings) {
-  val quality: Int = head.qualityModifier + binding.qualityModifier + handle.qualityModifier
+  private val quality: Int = head.qualityModifier + binding.qualityModifier + handle.qualityModifier
 
   override fun appendTooltip(
       stack: ItemStack,
@@ -27,11 +27,6 @@ class PrimaPickaxeItem(
     tooltip.add(Text.of("Quality: $quality"))
   }
 
-  override fun getTranslationKey(): String {
-    return "${head.toolMaterial.asString} Pickaxe"
-  }
-
-  override fun getTranslationKey(stack: ItemStack?): String {
-    return "${head.toolMaterial.asString} Pickaxe"
-  }
+  override fun getTranslationKey() = "${head.toolMaterial.asString} Pickaxe"
+  override fun getTranslationKey(stack: ItemStack?) = "${head.toolMaterial.asString} Pickaxe"
 }

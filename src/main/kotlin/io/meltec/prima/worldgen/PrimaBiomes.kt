@@ -88,8 +88,8 @@ object PrimaBiomes {
       val rawRegistry: Registry<Biome>
   ) : BiomeSource(toBiomes(rawRegistry)) {
     companion object {
-      val CODEC =
-          RecordCodecBuilder.create<ConvertingVanillaBiomeSource> { inst ->
+      val CODEC: Codec<ConvertingVanillaBiomeSource> =
+          RecordCodecBuilder.create { inst ->
             inst.group(
                     Codec.LONG.fieldOf("seed").forGetter { it.seed },
                     Codec.BOOL.fieldOf("largeBiomes").forGetter { it.largeBiomes },
@@ -104,7 +104,7 @@ object PrimaBiomes {
     }
 
     val convertedRegistry = convert(this.rawRegistry)
-    val delegate = VanillaLayeredBiomeSource(seed, false, largeBiomes, convertedRegistry)
+    private val delegate = VanillaLayeredBiomeSource(seed, false, largeBiomes, convertedRegistry)
 
     override fun getBiomeForNoiseGen(biomeX: Int, biomeY: Int, biomeZ: Int): Biome =
         delegate.getBiomeForNoiseGen(biomeX, biomeY, biomeZ)

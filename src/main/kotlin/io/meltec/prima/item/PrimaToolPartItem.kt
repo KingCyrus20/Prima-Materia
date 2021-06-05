@@ -6,4 +6,4 @@ open class PrimaToolPartItem(
     settings: Settings,
     val qualityModifier: Int = 0,
     val toolMaterial: PrimaToolMaterials
-) : Item(settings) {}
+) : Item(settings)

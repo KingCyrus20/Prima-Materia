@@ -25,35 +25,35 @@ object PrimaItems {
           .icon { ItemStack(GliderItem) }
           .build()
 
-  val GliderLeftWingItem = Item(FabricItemSettings().group(GENERAL_GROUP))
-  val GliderRightWingItem = Item(FabricItemSettings().group(GENERAL_GROUP))
-  val LeatherBindingItem =
+  private val GLIDER_LEFT_WING_ITEM = Item(FabricItemSettings().group(GENERAL_GROUP))
+  private val GLIDER_RIGHT_WING_ITEM = Item(FabricItemSettings().group(GENERAL_GROUP))
+  private val LEATHER_BINDING_ITEM =
       ToolBindingItem(FabricItemSettings().group(GENERAL_GROUP), 1, PrimaToolMaterials.LEATHER)
-  val StringBindingItem =
+  private val STRING_BINDING_ITEM =
       ToolBindingItem(FabricItemSettings().group(GENERAL_GROUP), 0, PrimaToolMaterials.STRING)
-  val WoodHandleItem =
+  private val WOOD_HANDLE_ITEM =
       ToolHandleItem(FabricItemSettings().group(GENERAL_GROUP), 0, PrimaToolMaterials.WOOD)
-  val FlintPickaxeHeadItem =
+  private val FLINT_PICKAXE_HEAD_ITEM =
       PickaxeHeadItem(FabricItemSettings().group(GENERAL_GROUP), 0, PrimaToolMaterials.FLINT)
-  val FLINT_SWORD =
+  private val FLINT_SWORD =
       SwordItem(PrimaToolMaterials.FLINT, 0, -2.4f, FabricItemSettings().group(COMBAT_GROUP))
-  val PRIMA_PICKAXE =
+  private val PRIMA_PICKAXE =
       PrimaPickaxeItem(
-          FlintPickaxeHeadItem,
-          StringBindingItem,
-          WoodHandleItem,
-          -2.8f,
+          FLINT_PICKAXE_HEAD_ITEM,
+          STRING_BINDING_ITEM,
+          WOOD_HANDLE_ITEM,
+          attackSpeed = -2.8f,
           FabricItemSettings().group(TOOL_GROUP))
 
   fun register() {
     Registry.register(Registry.ITEM, PrimaIdentifier("bow_drill"), BowDrillItem)
-    Registry.register(Registry.ITEM, PrimaIdentifier("glider_left_wing"), GliderLeftWingItem)
-    Registry.register(Registry.ITEM, PrimaIdentifier("glider_right_wing"), GliderRightWingItem)
+    Registry.register(Registry.ITEM, PrimaIdentifier("glider_left_wing"), GLIDER_LEFT_WING_ITEM)
+    Registry.register(Registry.ITEM, PrimaIdentifier("glider_right_wing"), GLIDER_RIGHT_WING_ITEM)
     Registry.register(Registry.ITEM, PrimaIdentifier("glider"), GliderItem)
-    Registry.register(Registry.ITEM, PrimaIdentifier("leather_binding"), LeatherBindingItem)
-    Registry.register(Registry.ITEM, PrimaIdentifier("string_binding"), StringBindingItem)
-    Registry.register(Registry.ITEM, PrimaIdentifier("wood_handle"), WoodHandleItem)
-    Registry.register(Registry.ITEM, PrimaIdentifier("flint_pickaxe_head"), FlintPickaxeHeadItem)
+    Registry.register(Registry.ITEM, PrimaIdentifier("leather_binding"), LEATHER_BINDING_ITEM)
+    Registry.register(Registry.ITEM, PrimaIdentifier("string_binding"), STRING_BINDING_ITEM)
+    Registry.register(Registry.ITEM, PrimaIdentifier("wood_handle"), WOOD_HANDLE_ITEM)
+    Registry.register(Registry.ITEM, PrimaIdentifier("flint_pickaxe_head"), FLINT_PICKAXE_HEAD_ITEM)
     Registry.register(Registry.ITEM, PrimaIdentifier("flint_sword"), FLINT_SWORD)
     Registry.register(Registry.ITEM, PrimaIdentifier("prima_pickaxe"), PRIMA_PICKAXE)
   }

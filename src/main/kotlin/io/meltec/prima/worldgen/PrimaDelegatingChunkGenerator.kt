@@ -2,7 +2,6 @@ package io.meltec.prima.worldgen
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import kotlin.math.round
 import net.minecraft.block.Blocks
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.registry.Registry
@@ -16,6 +15,7 @@ import net.minecraft.world.gen.StructureAccessor
 import net.minecraft.world.gen.chunk.ChunkGenerator
 import net.minecraft.world.gen.chunk.ChunkGeneratorSettings
 import net.minecraft.world.gen.chunk.NoiseChunkGenerator
+import kotlin.math.round
 
 /**
  * Chunk generator which relies on another chunk generator to produce the basic noise. Adds rock
@@ -27,8 +27,8 @@ class PrimaDelegatingChunkGenerator(
     val settings: ChunkGeneratorSettings
 ) : ChunkGenerator(biomes, biomes, settings.structuresConfig, seed) {
   companion object {
-    val CODEC =
-        RecordCodecBuilder.create<PrimaDelegatingChunkGenerator> { inst ->
+    val CODEC: Codec<PrimaDelegatingChunkGenerator> =
+        RecordCodecBuilder.create { inst ->
           inst.group(
                   PrimaBiomes.ConvertingVanillaBiomeSource.CODEC.fieldOf("biomes").forGetter {
                     it.biomes
