@@ -1,8 +1,8 @@
 package io.meltec.prima
 
 import io.meltec.prima.util.PrimaIdentifier
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings
 import net.fabricmc.fabric.api.`object`.builder.v1.block.FabricBlockSettings
+import net.fabricmc.fabric.api.item.v1.FabricItemSettings
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags
 import net.minecraft.block.Block
 import net.minecraft.block.Material
@@ -40,6 +40,7 @@ object PrimaBlocks {
   private val LIGNITE_ORE = createOre(1)
 
   fun register() {
+    registerBlock("dev_cube", Block(FabricBlockSettings.of(Material.STONE)))
     registerBlock("copper_ore", COPPER_ORE)
     registerBlock("tin_ore", TIN_ORE)
     registerBlock("chalcocite_ore", CHALCOCITE_ORE)
