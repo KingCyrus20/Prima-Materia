@@ -1,6 +1,7 @@
 package io.meltec.prima.client.model
 
 import com.mojang.datafixers.util.Pair
+import java.util.function.Function
 import net.fabricmc.fabric.api.renderer.v1.RendererAccess
 import net.fabricmc.fabric.api.renderer.v1.mesh.Mesh
 import net.fabricmc.fabric.api.renderer.v1.mesh.MeshBuilder
@@ -16,7 +17,6 @@ import net.minecraft.client.util.math.AffineTransformation
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.Quaternion
 import org.apache.logging.log4j.LogManager
-import java.util.function.Function
 
 class PrimaObjUnbakedModel(
     private val spriteIdentifier: SpriteIdentifier,
