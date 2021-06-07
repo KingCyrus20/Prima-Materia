@@ -1,6 +1,6 @@
 @file:Suppress("MemberVisibilityCanBePrivate")
 
-package io.meltec.prima
+package io.meltec.prima.block
 
 import io.meltec.prima.util.PrimaIdentifier
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings
@@ -13,6 +13,8 @@ import net.minecraft.item.ItemGroup
 import net.minecraft.util.registry.Registry
 
 object PrimaBlocks {
+  val DEV_CUBE = DevCubeBlock
+
   val COPPER_ORE = createOre(1)
   val TIN_ORE = createOre(1)
   val CHALCOCITE_ORE = createOre(1)
@@ -42,7 +44,7 @@ object PrimaBlocks {
   val LIGNITE_ORE = createOre(1)
 
   fun register() {
-    registerBlock("dev_cube", Block(FabricBlockSettings.of(Material.STONE)))
+    registerBlock("dev_cube", DEV_CUBE)
     registerBlock("ore/copper", COPPER_ORE)
     registerBlock("ore/tin", TIN_ORE)
     registerBlock("ore/chalcocite", CHALCOCITE_ORE)

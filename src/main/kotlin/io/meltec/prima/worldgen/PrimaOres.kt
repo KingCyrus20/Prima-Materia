@@ -2,7 +2,7 @@
 
 package io.meltec.prima.worldgen
 
-import io.meltec.prima.PrimaBlocks
+import io.meltec.prima.block.PrimaBlocks
 import io.meltec.prima.util.PrimaIdentifier
 import net.minecraft.util.registry.BuiltinRegistries
 import net.minecraft.util.registry.Registry
