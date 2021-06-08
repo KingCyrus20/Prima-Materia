@@ -1,7 +1,5 @@
 package io.meltec.prima.client.model
 
-import java.util.*
-import java.util.function.Supplier
 import net.fabricmc.fabric.api.renderer.v1.mesh.Mesh
 import net.fabricmc.fabric.api.renderer.v1.model.FabricBakedModel
 import net.fabricmc.fabric.api.renderer.v1.render.RenderContext
@@ -15,6 +13,8 @@ import net.minecraft.item.ItemStack
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.BlockRenderView
+import java.util.*
+import java.util.function.Supplier
 
 class PrimaObjBakedModel(private val mesh: Mesh, private val sprite: Sprite) :
     BakedModel, FabricBakedModel {
