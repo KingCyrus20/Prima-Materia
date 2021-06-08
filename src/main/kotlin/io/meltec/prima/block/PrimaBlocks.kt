@@ -9,7 +9,7 @@ import net.minecraft.util.registry.Registry
 
 object PrimaBlocks {
   fun register() {
-    PrimaOreBlocks.register()
+    PrimaOreBlocks.registerToMinecraft()
     registerBlock("dev_cube", DevCubeBlock)
   }
 
@@ -20,4 +20,9 @@ object PrimaBlocks {
         PrimaIdentifier(identifier),
         BlockItem(block, FabricItemSettings().group(ItemGroup.BUILDING_BLOCKS)))
   }
+}
+
+interface PrimaBlockRegistry {
+  fun register(identifier: String, block: Block)
+  fun registerToMinecraft()
 }

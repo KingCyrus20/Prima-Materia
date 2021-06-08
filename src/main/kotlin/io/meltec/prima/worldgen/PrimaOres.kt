@@ -13,8 +13,7 @@ import net.minecraft.world.gen.decorator.RangeDecoratorConfig
 object PrimaOres {
   val ORE_COPPER_OVERWORLD =
       PrimaFeatures.PERLIN_ORE_CLUSTER
-          .configure(
-              PerlinOreClusterFeatureConfig(PrimaOreBlocks.COPPER.defaultState, 48, 24, 0.2))
+          .configure(PerlinOreClusterFeatureConfig(PrimaOreBlocks.COPPER.defaultState, 48, 24, 0.2))
           .applyChance(1600)
           .decorate(Decorator.RANGE.configure(RangeDecoratorConfig(20, 0, 120)))
           .spreadHorizontally()!!
