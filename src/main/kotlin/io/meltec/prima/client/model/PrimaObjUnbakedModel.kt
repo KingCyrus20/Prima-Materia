@@ -81,11 +81,11 @@ class PrimaObjUnbakedModel(
     var (nx, ny, nz) = model.normals[normal]
     if (transformation != AffineTransformation.identity()) {
       val (rx, ry, rz, _) =
-          rotate(x + BLOCK_CENTER, y + BLOCK_CENTER, z + BLOCK_CENTER, 0f, transformation.rotation2)
+          rotate(x - BLOCK_CENTER, y - BLOCK_CENTER, z - BLOCK_CENTER, 0f, transformation.rotation2)
       val (rnx, rny, rnz, _) = rotate(nx, ny, nz, 0f, transformation.rotation2)
-      x = rx - BLOCK_CENTER
-      y = ry - BLOCK_CENTER
-      z = rz - BLOCK_CENTER
+      x = rx + BLOCK_CENTER
+      y = ry + BLOCK_CENTER
+      z = rz + BLOCK_CENTER
       nx = rnx
       ny = rny
       nz = rnz
