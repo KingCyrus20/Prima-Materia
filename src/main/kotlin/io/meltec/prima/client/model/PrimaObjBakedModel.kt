@@ -36,13 +36,18 @@ class PrimaObjBakedModel(private val mesh: Mesh, private val sprite: Sprite) :
       context: RenderContext?
   ) {}
 
-  override fun getQuads(
-      state: BlockState?,
-      face: Direction?,
-      random: Random?
-  ): MutableList<BakedQuad> {
-    return mutableListOf()
+  /**
+   * The [BakedQuad]s representing this [BakedModel].
+   *
+   * Used for multipart support
+   */
+  private val vanillaQuads by lazy {
+    mutableListOf<BakedQuad>().apply {
+      mesh.forEach { add(it.toBakedQuad(0, sprite, /* isItem= */ false)) }
+    }
   }
+
+  override fun getQuads(state: BlockState?, face: Direction?, random: Random?) = vanillaQuads
 
   override fun useAmbientOcclusion() = true
 

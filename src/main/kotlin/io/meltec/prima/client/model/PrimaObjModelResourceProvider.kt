@@ -30,6 +30,4 @@ class PrimaObjModelResourceProvider(private val resourceManager: ResourceManager
 
     return PrimaObjUnbakedModel(spriteIdentifier, primaObj)
   }
-
-  companion object
 }
