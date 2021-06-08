@@ -2,7 +2,7 @@
 
 package io.meltec.prima.worldgen
 
-import io.meltec.prima.block.PrimaBlocks
+import io.meltec.prima.block.PrimaOreBlocks
 import io.meltec.prima.util.PrimaIdentifier
 import net.minecraft.util.registry.BuiltinRegistries
 import net.minecraft.util.registry.Registry
@@ -14,21 +14,21 @@ object PrimaOres {
   val ORE_COPPER_OVERWORLD =
       PrimaFeatures.PERLIN_ORE_CLUSTER
           .configure(
-              PerlinOreClusterFeatureConfig(PrimaBlocks.COPPER_ORE.defaultState, 48, 24, 0.2))
+              PerlinOreClusterFeatureConfig(PrimaOreBlocks.COPPER.defaultState, 48, 24, 0.2))
           .applyChance(1600)
           .decorate(Decorator.RANGE.configure(RangeDecoratorConfig(20, 0, 120)))
           .spreadHorizontally()!!
 
   val ORE_TIN_OVERWORLD =
       PrimaFeatures.PERLIN_ORE_CLUSTER
-          .configure(PerlinOreClusterFeatureConfig(PrimaBlocks.TIN_ORE.defaultState, 20, 48, 0.2))
+          .configure(PerlinOreClusterFeatureConfig(PrimaOreBlocks.TIN.defaultState, 20, 48, 0.2))
           .applyChance(1200)
           .decorate(Decorator.RANGE.configure(RangeDecoratorConfig(20, 0, 120)))
           .spreadHorizontally()!!
 
   val ORE_ZINC_OVERWORLD =
       PrimaFeatures.PERLIN_ORE_CLUSTER
-          .configure(PerlinOreClusterFeatureConfig(PrimaBlocks.ZINC_ORE.defaultState, 32, 24, 0.2))
+          .configure(PerlinOreClusterFeatureConfig(PrimaOreBlocks.ZINC.defaultState, 32, 24, 0.2))
           .applyChance(1200)
           .decorate(Decorator.RANGE.configure(RangeDecoratorConfig(20, 0, 120)))
           .spreadHorizontally()!!

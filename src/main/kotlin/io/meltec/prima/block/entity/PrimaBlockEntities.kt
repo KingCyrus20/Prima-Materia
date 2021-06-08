@@ -1,6 +1,6 @@
 package io.meltec.prima.block.entity
 
-import io.meltec.prima.block.PrimaBlocks.DEV_CUBE
+import io.meltec.prima.block.DevCubeBlock
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.util.registry.Registry
 
@@ -12,6 +12,6 @@ object PrimaBlockEntities {
         Registry.register(
             Registry.BLOCK_ENTITY_TYPE,
             "prima_materia:dev_cube_entity",
-            BlockEntityType.Builder.create(::DevCubeBlockEntity, DEV_CUBE).build(null))
+            BlockEntityType.Builder.create(::DevCubeBlockEntity, DevCubeBlock).build(null))
   }
 }
