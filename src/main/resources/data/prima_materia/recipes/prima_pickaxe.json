@@ -1,0 +1,13 @@
+{
+  "type": "prima_materia:tool_recipe",
+  "inputA": {
+    "tag": "prima_materia:pickaxe_heads"
+  },
+  "inputB": {
+    "tag": "prima_materia:tool_bindings"
+  },
+  "inputC": {
+    "tag": "prima_materia:tool_handles"
+  },
+  "outputItem": "prima_materia:prima_pickaxe"
+}

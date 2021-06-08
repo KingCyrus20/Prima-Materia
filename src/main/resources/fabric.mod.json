@@ -25,9 +25,6 @@
         "adapter": "kotlin",
         "value": "io.meltec.prima.PrimaMateria"
       }
-    ],
-    "cardinal-components-item": [
-      "io.meltec.prima.component.PrimaComponents"
     ]
   },
   "depends": {
