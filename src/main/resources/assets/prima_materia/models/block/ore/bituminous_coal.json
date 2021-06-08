@@ -1,6 +1,6 @@
 {
   "parent": "block/cube_all",
   "textures": {
-    "all": "prima_materia:block/ore/bituminous"
+    "all": "prima_materia:block/ore/bituminous_coal"
   }
 }
