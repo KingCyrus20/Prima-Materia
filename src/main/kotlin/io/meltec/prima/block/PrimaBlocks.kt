@@ -11,6 +11,7 @@ object PrimaBlocks {
   fun register() {
     PrimaOreBlocks.registerToMinecraft()
     registerBlock("dev_cube", DevCubeBlock)
+    registerBlock("crucible", CrucibleBlock)
   }
 
   fun registerBlock(identifier: String, block: Block) {
