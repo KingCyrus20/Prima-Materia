@@ -4,8 +4,6 @@ import net.fabricmc.fabric.api.`object`.builder.v1.block.FabricBlockSettings
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags
 import net.minecraft.block.Block
 import net.minecraft.block.Material
-import kotlin.properties.ReadOnlyProperty
-import kotlin.reflect.KProperty
 
 // Under development, this warning is not useful atm
 @Suppress("unused")
@@ -15,9 +13,9 @@ object PrimaOreBlocks : PrimaBlockRegistry {
     blockRegistry[identifier] = block
   }
 
-  private val levelOneOreProvider = OreProvider(miningLevel = 1)
-  private val levelTwoOreProvider = OreProvider(miningLevel = 2)
-  private val levelThreeOreProvider = OreProvider(miningLevel = 3)
+  private val levelOneOreProvider = BlockProvider { createOre(miningLevel = 1) }
+  private val levelTwoOreProvider = BlockProvider { createOre(miningLevel = 2) }
+  private val levelThreeOreProvider = BlockProvider { createOre(miningLevel = 3) }
 
   val ACANTHITE by levelTwoOreProvider
   val ANTHRACITE by levelTwoOreProvider
@@ -51,26 +49,12 @@ object PrimaOreBlocks : PrimaBlockRegistry {
       PrimaBlocks.registerBlock("ore/$id", block)
     }
   }
-}
 
-private class OreProvider(private val miningLevel: Int) {
-
-  operator fun provideDelegate(
-      thisRef: PrimaBlockRegistry,
-      prop: KProperty<*>
-  ): ReadOnlyProperty<PrimaBlockRegistry, Block> {
-    val block = createOre(miningLevel)
-    thisRef.register(prop.name.lowercase(), block)
-    return ReadOnlyProperty { _, _ -> block }
-  }
-
-  companion object {
-    fun createOre(miningLevel: Int): Block {
-      return Block(
-          FabricBlockSettings.of(Material.STONE)
-              .requiresTool()
-              .strength(3.0f)
-              .breakByTool(FabricToolTags.PICKAXES, miningLevel))
-    }
+  private fun createOre(miningLevel: Int): Block {
+    return Block(
+        FabricBlockSettings.of(Material.STONE)
+            .requiresTool()
+            .strength(3.0f)
+            .breakByTool(FabricToolTags.PICKAXES, miningLevel))
   }
 }

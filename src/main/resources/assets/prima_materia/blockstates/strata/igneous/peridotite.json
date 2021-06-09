@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "parent": "prima_materia:block/strata/igneous/peridotite"
+    }
+  }
+}

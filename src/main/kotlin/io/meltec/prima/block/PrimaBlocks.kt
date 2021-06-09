@@ -6,10 +6,13 @@ import net.minecraft.block.Block
 import net.minecraft.item.BlockItem
 import net.minecraft.item.ItemGroup
 import net.minecraft.util.registry.Registry
+import kotlin.properties.ReadOnlyProperty
+import kotlin.reflect.KProperty
 
 object PrimaBlocks {
   fun register() {
     PrimaOreBlocks.registerToMinecraft()
+    PrimaStrataBlocks.registerToMinecraft()
     registerBlock("dev_cube", DevCubeBlock)
     registerBlock("crucible", CrucibleBlock)
   }
@@ -26,4 +29,18 @@ object PrimaBlocks {
 interface PrimaBlockRegistry {
   fun register(identifier: String, block: Block)
   fun registerToMinecraft()
+  val prefix: String?
+    get() = null
+}
+
+class BlockProvider<T : Block>(private val blockProvider: () -> T) {
+  operator fun provideDelegate(
+      thisRef: PrimaBlockRegistry,
+      prop: KProperty<*>
+  ): ReadOnlyProperty<PrimaBlockRegistry, Block> {
+    val block = blockProvider()
+    val identifier = thisRef.prefix.orEmpty() + prop.name.lowercase()
+    thisRef.register(identifier, block)
+    return ReadOnlyProperty { _, _ -> block }
+  }
 }
