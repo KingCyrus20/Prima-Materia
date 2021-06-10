@@ -1,11 +1,10 @@
 package io.meltec.prima.recipe
 
 import io.meltec.prima.item.PickaxeHeadItem
-import io.meltec.prima.item.PrimaPickaxeItem
+import io.meltec.prima.item.PrimaItems
 import io.meltec.prima.item.ToolBindingItem
 import io.meltec.prima.item.ToolHandleItem
 import io.meltec.prima.mixin.CraftingInventoryAccessor
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings
 import net.minecraft.item.ItemStack
 import net.minecraft.recipe.Ingredient
 import net.minecraft.util.Identifier
@@ -29,21 +28,28 @@ class PickaxeRecipe(
         inv.stacks[6 + offset].item is ToolHandleItem
   }
 
-  override fun craft(inv: CraftingInventoryAccessor): ItemStack =
-      when {
-        !inv.stacks[0].isEmpty -> ItemStack(createItem(inv, 0))
-        !inv.stacks[1].isEmpty -> ItemStack(createItem(inv, 1))
-        !inv.stacks[2].isEmpty -> ItemStack(createItem(inv, 2))
-        else -> ItemStack.EMPTY
-      }
+  override fun craft(inv: CraftingInventoryAccessor): ItemStack {
+    val columnOffset =
+        when {
+            checkColumn(inv, 0) -> 0
+            checkColumn(inv, 1) -> 1
+            else -> 2
+        }
+    val head = inv.stacks[0 + columnOffset].item as PickaxeHeadItem
+    val binding = inv.stacks[3 + columnOffset].item as ToolBindingItem
+    val handle = inv.stacks[6 + columnOffset].item as ToolHandleItem
 
-  private fun createItem(inv: CraftingInventoryAccessor, offset: Int): PrimaPickaxeItem {
-    return PrimaPickaxeItem(
-        inv.stacks[offset].item as PickaxeHeadItem,
-        inv.stacks[3 + offset].item as ToolBindingItem,
-        inv.stacks[6 + offset].item as ToolHandleItem,
-        attackSpeed = -2.8f,
-        FabricItemSettings())
+    val result = ItemStack(PrimaItems.PRIMA_PICKAXE)
+    result.orCreateTag.putInt("durability", head.toolMaterial.durability + binding.toolMaterial.durability + handle.toolMaterial.durability)
+    result.tag!!.putInt("mining_level", head.toolMaterial.miningLevel)
+    result.tag!!.putFloat("mining_speed", head.toolMaterial.miningSpeed)
+    result.tag!!.putFloat("attack_damage", head.toolMaterial.attackDamage)
+    result.tag!!.putFloat("attack_speed", -2.8f)
+    result.tag!!.putString("head_material", head.toolMaterial.name)
+    result.tag!!.putString("binding_material", binding.toolMaterial.name)
+    result.tag!!.putString("handle_material", handle.toolMaterial.name)
+    result.tag!!.putInt("quality", head.qualityModifier + binding.qualityModifier + handle.qualityModifier)
+    return result
   }
 
   override fun fits(width: Int, height: Int) = false
