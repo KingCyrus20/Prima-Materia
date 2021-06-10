@@ -47,61 +47,69 @@ class PrimaObjUnbakedModel(
 
     return PrimaObjBakedModel(mesh, sprite)
   }
-
-  private fun MeshBuilder.createMeshFrom(
-      model: PrimaObj,
-      sprite: Sprite,
-      transformation: AffineTransformation,
-  ): Mesh {
-    emitter.createMeshFrom(model, sprite, transformation)
-    return build()
-  }
-
-  private fun QuadEmitter.createMeshFrom(
-      model: PrimaObj,
-      sprite: Sprite,
-      transformation: AffineTransformation,
-  ) {
-    for (face in model.faces) {
-      for ((index, vertex) in face.withIndex()) {
-        createVertexFrom(primaObj, index, vertex, transformation)
-      }
-
-      // If we have a triangle, add another vertex to statisfy quad view
-      if (face.size == 3) createVertexFrom(primaObj, 3, face[2], transformation)
-
-      // Attach the texture to the current quad
-      spriteBake(0, sprite, MutableQuadView.BAKE_NORMALIZED or MutableQuadView.BAKE_FLIP_V)
-      emit()
-    }
-  }
-
-  private fun QuadEmitter.createVertexFrom(
-      model: PrimaObj,
-      index: Int,
-      vertex: IntArray,
-      transformation: AffineTransformation,
-  ) {
-    val (posIndex, texIndex, normIndex) = vertex
-
-    // Set up vertex position
-    model.positions[posIndex]
-        .mapIf(transformation.isNotIdentity) { rotate(it, transformation.rotation2, BLOCK_CENTER) }
-        .also { pos(index, it.x, it.y, it.z) }
-
-    // Set up vertex normal
-    model.normals[normIndex]
-        .mapIf(transformation.isNotIdentity) { rotate(it, transformation.rotation2) }
-        .also { normal(index, it.x, it.y, it.z) }
-
-    // Set up the texture coordinates and material color
-    with(model.texCoords[texIndex]) { sprite(index, 0, u, v) }
-    spriteColor(index, 0, /* color= */ 0xFFFFFF)
-  }
-
   companion object {
     private const val BLOCK_CENTER = 0.5f
     private val logger = LogManager.getLogger()
+
+    private fun MeshBuilder.createMeshFrom(
+        model: PrimaObj,
+        sprite: Sprite,
+        transformation: AffineTransformation,
+    ): Mesh {
+      emitter.createMeshFrom(model, sprite, transformation)
+      return build()
+    }
+
+    private fun QuadEmitter.createMeshFrom(
+        model: PrimaObj,
+        sprite: Sprite,
+        transformation: AffineTransformation,
+    ) {
+      for (face in model.faces) {
+        for ((index, vertex) in face.withIndex()) {
+          createVertexFrom(model, index, vertex, transformation)
+        }
+
+        // If we have a triangle, add another vertex to statisfy quad view
+        if (face.size == 3) copyVertex(from = 2, to = 3)
+
+        // Attach the texture to the current quad
+        spriteBake(0, sprite, MutableQuadView.BAKE_NORMALIZED or MutableQuadView.BAKE_FLIP_V)
+        emit()
+      }
+    }
+
+    private fun QuadEmitter.createVertexFrom(
+        model: PrimaObj,
+        index: Int,
+        vertex: IntArray,
+        transformation: AffineTransformation,
+    ) {
+      val (posIndex, texIndex, normIndex) = vertex
+
+      // Set up vertex position
+      model.positions[posIndex]
+          .mapIf(transformation.isNotIdentity) {
+            rotate(it, transformation.rotation2, BLOCK_CENTER)
+          }
+          .also { pos(index, it.x, it.y, it.z) }
+
+      // Set up vertex normal
+      model.normals[normIndex]
+          .mapIf(transformation.isNotIdentity) { rotate(it, transformation.rotation2) }
+          .also { normal(index, it.x, it.y, it.z) }
+
+      // Set up the texture coordinates and material color
+      with(model.texCoords[texIndex]) { sprite(index, 0, u, v) }
+      spriteColor(index, 0, /* color= */ 0xFFFFFF)
+    }
+
+    private fun QuadEmitter.copyVertex(from: Int, to: Int) {
+      pos(to, x(from), y(from), z(from))
+      normal(to, normalX(from), normalY(from), normalZ(from))
+      sprite(to, 0, spriteU(from, 0), spriteV(from, 0))
+      spriteColor(to, 0, spriteColor(from, 0))
+    }
   }
 }
 
