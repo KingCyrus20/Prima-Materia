@@ -1,6 +1,6 @@
 package io.meltec.prima.mixin;
 
-import io.meltec.prima.item.PrimaPickaxe;
+import io.meltec.prima.item.PrimaPickaxeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
@@ -21,7 +21,7 @@ public class ItemStackMixin {
 
     @Inject(method = "getMaxDamage", at = @At("HEAD"), cancellable = true)
     public void getMaxDamage(CallbackInfoReturnable<Integer> ci) {
-        if (item instanceof PrimaPickaxe && tag.contains("durability")) {
+        if (item instanceof PrimaPickaxeItem && tag.contains("durability")) {
             ci.setReturnValue(tag.getInt("durability"));
         }
     }

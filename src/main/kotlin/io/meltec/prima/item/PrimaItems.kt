@@ -37,7 +37,7 @@ object PrimaItems {
       PickaxeHeadItem(FabricItemSettings().group(GENERAL_GROUP), 0, PrimaToolMaterials.FLINT)
   private val FLINT_SWORD =
       SwordItem(PrimaToolMaterials.FLINT, 0, -2.4f, FabricItemSettings().group(COMBAT_GROUP))
-  val PRIMA_PICKAXE = PrimaPickaxe(PrimaToolMaterials.FLINT, 0,0f,FabricItemSettings().group(
+  val PRIMA_PICKAXE = PrimaPickaxeItem(PrimaToolMaterials.FLINT, 0,0f,FabricItemSettings().group(
       TOOL_GROUP))
 
   fun register() {
