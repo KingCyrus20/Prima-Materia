@@ -64,6 +64,8 @@ class PrimaPickaxeItem(material: ToolMaterial?, attackDamage: Int, attackSpeed: 
     return super.getDynamicModifiers(slot, stack, user)
   }
 
+  override fun getAttributeModifiers(slot: EquipmentSlot?): Multimap<EntityAttribute, EntityAttributeModifier> = ImmutableMultimap.of()
+
   override fun canRepair(stack: ItemStack, ingredient: ItemStack): Boolean {
     val headMaterial = stack.tag?.getString("head_material") ?: ""
     if (headMaterial != ""){
