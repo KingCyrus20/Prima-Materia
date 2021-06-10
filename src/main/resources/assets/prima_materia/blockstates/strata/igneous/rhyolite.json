@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "mdoel": "prima_materia:block/strata/igneous/rhyolite"
+      "model": "prima_materia:block/strata/igneous/rhyolite"
     }
   }
 }

@@ -1,5 +1,5 @@
 {
   "variants": {
-    "": { "model": "prima_materia:block/bismuthinite" }
+    "": { "model": "prima_materia:block/ore/bismuthinite" }
   }
 }
