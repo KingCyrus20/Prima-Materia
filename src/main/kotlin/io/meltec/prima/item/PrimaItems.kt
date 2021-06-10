@@ -37,13 +37,8 @@ object PrimaItems {
       PickaxeHeadItem(FabricItemSettings().group(GENERAL_GROUP), 0, PrimaToolMaterials.FLINT)
   private val FLINT_SWORD =
       SwordItem(PrimaToolMaterials.FLINT, 0, -2.4f, FabricItemSettings().group(COMBAT_GROUP))
-  private val PRIMA_PICKAXE =
-      PrimaPickaxeItem(
-          FLINT_PICKAXE_HEAD_ITEM,
-          STRING_BINDING_ITEM,
-          WOOD_HANDLE_ITEM,
-          attackSpeed = -2.8f,
-          FabricItemSettings().group(TOOL_GROUP))
+  private val PRIMA_PICKAXE = PrimaPickaxe(PrimaToolMaterials.FLINT, 0,0f,FabricItemSettings().group(
+      TOOL_GROUP))
 
   fun register() {
     Registry.register(Registry.ITEM, PrimaIdentifier("bow_drill"), BowDrillItem)
