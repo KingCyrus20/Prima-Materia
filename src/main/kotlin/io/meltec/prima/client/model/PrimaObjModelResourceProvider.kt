@@ -4,8 +4,6 @@ import io.meltec.prima.util.PRIMA_NAMESPACE
 import net.fabricmc.fabric.api.client.model.ModelProviderContext
 import net.fabricmc.fabric.api.client.model.ModelResourceProvider
 import net.minecraft.client.render.model.UnbakedModel
-import net.minecraft.client.texture.SpriteAtlasTexture
-import net.minecraft.client.util.SpriteIdentifier
 import net.minecraft.resource.ResourceManager
 import net.minecraft.util.Identifier
 
@@ -15,19 +13,20 @@ class PrimaObjModelResourceProvider(private val resourceManager: ResourceManager
       resourceId: Identifier,
       context: ModelProviderContext
   ): UnbakedModel? {
-    // Process only our resources
     if (resourceId.namespace != PRIMA_NAMESPACE) return null
 
-    // Process only obj resources
-    val qualifiedId = with(resourceId) { Identifier(namespace, "models/$path.obj") }
-    if (!resourceManager.containsResource(qualifiedId)) return null
+    val qualifiedJsonId = with(resourceId) { Identifier(namespace, "models/$path.json") }
+    if (!resourceManager.containsResource(qualifiedJsonId)) return null
+    val jsonUnbakedModel =
+        PrimaJsonUnbakedModel.deserialize(
+            resourceManager.getResource(qualifiedJsonId).inputStream.reader())
 
-    // TODO: Figure out what the atlas is actually supposed to be
-    @Suppress("DEPRECATION") val atlasIdentifier = SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE
+    val qualifiedObjId = with(resourceId) { Identifier(namespace, "models/$path.obj") }
+    if (resourceManager.containsResource(qualifiedObjId)) {
+      jsonUnbakedModel?.primaObj =
+          PrimaObj.read(resourceManager.getResource(qualifiedObjId).inputStream.reader())
+    }
 
-    val spriteIdentifier = SpriteIdentifier(atlasIdentifier, resourceId)
-    val primaObj = PrimaObj.read(resourceManager.getResource(qualifiedId).inputStream.reader())
-
-    return PrimaObjUnbakedModel(spriteIdentifier, primaObj)
+    return jsonUnbakedModel
   }
 }
