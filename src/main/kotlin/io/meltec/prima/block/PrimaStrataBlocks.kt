@@ -4,8 +4,7 @@ import net.fabricmc.fabric.api.`object`.builder.v1.block.FabricBlockSettings
 import net.minecraft.block.Block
 import net.minecraft.block.Material
 
-// Under development, this warning is not useful atm
-@Suppress("unused")
+@SuppressWarnings("unused")
 object PrimaStrataBlocks : PrimaBlockRegistry {
   private val blockRegistry = mutableMapOf<String, Block>()
   private val strataBlockProvider = BlockProvider {

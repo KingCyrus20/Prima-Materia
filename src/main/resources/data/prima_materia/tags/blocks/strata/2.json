@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    "prima_materia:strata/sedimentary/chalk",
+    "prima_materia:strata/sedimentary/chert",
+    "prima_materia:strata/sedimentary/dolomite",
+    "prima_materia:strata/sedimentary/limestone",
+    "prima_materia:strata/sedimentary/shale",
+    "prima_materia:strata/sedimentary/sandstone",
+    "prima_materia:strata/metamorphic/marble",
+    "prima_materia:strata/metamorphic/gneiss",
+    "prima_materia:strata/metamorphic/phylite",
+    "prima_materia:strata/metamorphic/schist",
+    "prima_materia:strata/metamorphic/slate",
+    "prima_materia:strata/metamorphic/quartzite"
+  ]
+}
