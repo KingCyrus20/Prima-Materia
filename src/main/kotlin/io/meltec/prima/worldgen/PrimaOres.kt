@@ -4,49 +4,33 @@ package io.meltec.prima.worldgen
 
 import io.meltec.prima.block.PrimaOreBlocks
 import io.meltec.prima.util.PrimaIdentifier
-import net.minecraft.util.registry.BuiltinRegistries
-import net.minecraft.util.registry.Registry
-import net.minecraft.util.registry.RegistryKey
+import net.fabricmc.fabric.api.tag.TagRegistry
+import net.minecraft.block.Block
+import net.minecraft.structure.rule.BlockMatchRuleTest
+import net.minecraft.structure.rule.RuleTest
+import net.minecraft.tag.Tag
 import net.minecraft.world.gen.decorator.Decorator
 import net.minecraft.world.gen.decorator.RangeDecoratorConfig
+import java.util.*
 
+@SuppressWarnings("unused")
 object PrimaOres {
-  val ORE_COPPER_OVERWORLD =
-      PrimaFeatures.PERLIN_ORE_CLUSTER
-          .configure(PerlinOreClusterFeatureConfig(PrimaOreBlocks.COPPER.defaultState, 48, 24, 0.2))
-          .applyChance(1600)
-          .decorate(Decorator.RANGE.configure(RangeDecoratorConfig(20, 0, 120)))
-          .spreadHorizontally()!!
+  val ALL = TagRegistry.block(PrimaIdentifier("ores/all"))
+  val SEDIMENTARY = TagRegistry.block(PrimaIdentifier("ores/sedimentary"))
+  val METAMORPHIC = TagRegistry.block(PrimaIdentifier("ores/metamorphic"))
+  val IGNEOUS = TagRegistry.block(PrimaIdentifier("ores/igneous"))
 
-  val ORE_TIN_OVERWORLD =
-      PrimaFeatures.PERLIN_ORE_CLUSTER
-          .configure(PerlinOreClusterFeatureConfig(PrimaOreBlocks.TIN.defaultState, 20, 48, 0.2))
-          .applyChance(1200)
-          .decorate(Decorator.RANGE.configure(RangeDecoratorConfig(20, 0, 120)))
-          .spreadHorizontally()!!
+  /** Sample a valid ore which can be found in the given strata block at the given depth. */
+  fun sampleOre(strata: Block, rng: Random): Block =
+      tagByStrata(PrimaStrata.typeOf(strata) ?: Strata.SEDIMENTARY).getRandom(rng)
 
-  val ORE_ZINC_OVERWORLD =
-      PrimaFeatures.PERLIN_ORE_CLUSTER
-          .configure(PerlinOreClusterFeatureConfig(PrimaOreBlocks.ZINC.defaultState, 32, 24, 0.2))
-          .applyChance(1200)
-          .decorate(Decorator.RANGE.configure(RangeDecoratorConfig(20, 0, 120)))
-          .spreadHorizontally()!!
+  /** Obtain the ore generation config for the given ore block and strata. */
+  fun oreConfig(ore: Block, strata: Block): PerlinOreClusterFeatureConfig =
+      PerlinOreClusterFeatureConfig(ore.defaultState, BlockMatchRuleTest(strata), 48, 24, 0.2)
 
-  fun register() {
-    val oreCopperOverworld =
-        RegistryKey.of(
-            Registry.CONFIGURED_FEATURE_WORLDGEN, PrimaIdentifier("ore_copper_overworld"))
-    Registry.register(
-        BuiltinRegistries.CONFIGURED_FEATURE, oreCopperOverworld.value, ORE_COPPER_OVERWORLD)
-
-    val oreTinOverworld =
-        RegistryKey.of(Registry.CONFIGURED_FEATURE_WORLDGEN, PrimaIdentifier("ore_tin_overworld"))
-    Registry.register(
-        BuiltinRegistries.CONFIGURED_FEATURE, oreTinOverworld.value, ORE_TIN_OVERWORLD)
-
-    val oreZincOverworld =
-        RegistryKey.of(Registry.CONFIGURED_FEATURE_WORLDGEN, PrimaIdentifier("ore_zinc_overworld"))
-    Registry.register(
-        BuiltinRegistries.CONFIGURED_FEATURE, oreZincOverworld.value, ORE_ZINC_OVERWORLD)
+  fun tagByStrata(strata: Strata): Tag<Block> = when(strata) {
+    Strata.SEDIMENTARY -> SEDIMENTARY
+    Strata.METAMORPHIC -> METAMORPHIC
+    Strata.IGNEOUS -> IGNEOUS
   }
 }

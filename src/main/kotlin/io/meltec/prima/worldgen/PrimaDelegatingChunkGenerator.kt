@@ -47,6 +47,8 @@ class PrimaDelegatingChunkGenerator(
     val STRATA_REGION = Region(32)
     /** The size of the region in which ore control points are sampled. */
     val ORE_REGION = Region(8)
+    /** The number of ore veins per ore region. */
+    const val ORE_SPOTS_PER_REGION = 8
   }
 
   private val delegate = NoiseChunkGenerator(biomes, seed) { this.settings }
@@ -72,7 +74,7 @@ class PrimaDelegatingChunkGenerator(
     val heightmap = chunk.getHeightmap(Heightmap.Type.WORLD_SURFACE_WG)
     // Average of this height location and the average sea level, (/2)
     // then divide into 4 regions (/4).
-    val regionHeight = round((heightmap[7, 7] + this.seaLevel) / 8.0)
+    val regionHeight = round((heightmap[7, 7] + this.seaLevel) / 8.0).toInt()
 
     val strataControls =
         Array(4) { layer -> sampleStrataControlPoints(chunk.pos.x, chunk.pos.z, layer) }
@@ -82,28 +84,47 @@ class PrimaDelegatingChunkGenerator(
       for (z in 0..15) {
         var strataLayer = 0
         var strataPosition = 0
+        var strataHeight =
+            sampleStrataHeight(
+                regionHeight, x + chunk.pos.startX, z + chunk.pos.startZ, strataLayer)
         for (y in heightmap[x, z] downTo 0) {
           position.set(x, y, z)
           val existing = chunk.getBlockState(position).block
           if (existing != Blocks.STONE && existing != Blocks.SANDSTONE) continue
 
           val strataBlock =
-              sampleStrata(strataControls[strataLayer], x + chunk.pos.startX, z + chunk.pos.startZ)
+              sampleStrata(
+                  strataControls[strataLayer], x + chunk.pos.startX, y, z + chunk.pos.startZ)
           chunk.setBlockState(position, strataBlock, false)
           strataPosition += 1
-          if (strataPosition >= regionHeight) {
+          if (strataPosition >= strataHeight) {
             strataPosition = 0
             strataLayer = (strataLayer + 1).coerceAtMost(3)
+            strataHeight =
+                sampleStrataHeight(
+                    regionHeight, x + chunk.pos.startX, z + chunk.pos.startZ, strataLayer)
           }
         }
       }
     }
   }
 
+  private fun sampleStrataHeight(regionHeight: Int, x: Int, z: Int, layer: Int): Int =
+      regionHeight +
+          (this.seaLevel / 17.0 *
+                  strataNoise.sample(x / 50.0, layer.toDouble(), z / 50.0, 0.0, 0.0))
+              .toInt()
+
   /** Sample a specific strata block at a block position using the strata control points. */
-  private fun sampleStrata(controls: Array<StrataControlPoint>, x: Int, z: Int): BlockState {
-    val biasX = strataNoise.sample(x.toDouble() / 50.0, 0.0, z.toDouble() / 50.0, 0.0, 0.0)
-    val biasZ = strataNoise.sample(x.toDouble() / 50.0, 127.0, z.toDouble() / 50.0, 0.0, 0.0)
+  private fun sampleStrata(
+      controls: Array<StrataControlPoint>,
+      x: Int,
+      y: Int,
+      z: Int
+  ): BlockState {
+    val biasX = strataNoise.sample(x.toDouble() / 50.0, y / 50.0, z.toDouble() / 50.0, 0.0, 0.0)
+    val biasZ =
+        strataNoise.sample(x.toDouble() / 50.0, y / 50.0 + 127.0, z.toDouble() / 50.0, 0.0, 0.0)
 
     val dx = (biasX * STRATA_REGION.blockWidth / 3).toInt()
     val dz = (biasZ * STRATA_REGION.blockWidth / 3).toInt()
@@ -142,7 +163,45 @@ class PrimaDelegatingChunkGenerator(
   }
 
   /** Sample locations for ore veins. */
-  private fun buildOreVeins(region: ChunkRegion) {}
+  private fun buildOreVeins(region: ChunkRegion) {
+    val oreSpots = numOrePoints(region.centerChunkX, region.centerChunkZ)
+    if (oreSpots == 0) return
+
+    val chunk = region.getChunk(region.centerChunkX, region.centerChunkZ)
+    val rng = ChunkRandom().also { it.setTerrainSeed(region.centerChunkX, region.centerChunkZ) }
+    for (spotId in 1..oreSpots) {
+      val lx = rng.nextInt(16)
+      val lz = rng.nextInt(16)
+      // Generate a random height to generate based on the heightmap.
+      val y = rng.nextInt(chunk.sampleHeightmap(Heightmap.Type.WORLD_SURFACE_WG, lx, lz) - 4)
+
+      val position = BlockPos.Mutable(chunk.pos.startX + lx, y, chunk.pos.startZ + lz)
+      while (y > 0 && PrimaStrata.typeOf(region.getBlockState(position).block) == null) position
+          .y -= 1
+
+      val strataBlock = region.getBlockState(position).block
+      val ore = PrimaOres.sampleOre(strataBlock, rng)
+      val config = PrimaOres.oreConfig(ore, strataBlock)
+
+      println("Generating ore vein ${ore.name} at ${position.x}, ${position.y}, ${position.z}")
+      PerlinOreClusterFeature.generate(region, this, rng, position, config)
+    }
+  }
+
+  /** Sample the ore locations within the region the chunk is inside. */
+  private fun numOrePoints(chunkX: Int, chunkZ: Int): Int {
+    val (regionX, regionZ) = ORE_REGION.toRegionCoords(chunkX, chunkZ)
+    val rng = ChunkRandom().also { it.setRegionSeed(this.seed, regionX, regionZ, 1984) }
+
+    var count = 0
+    for (oreId in 1..ORE_SPOTS_PER_REGION) {
+      val xPos = rng.nextInt(ORE_REGION.width)
+      val zPos = rng.nextInt(ORE_REGION.width)
+      if (xPos == chunkX % ORE_REGION.width && zPos == chunkZ % ORE_REGION.width) count += 1
+    }
+
+    return count
+  }
 
   /** Delegates for methods which we let another chunk generator do. */
   override fun buildSurface(region: ChunkRegion?, chunk: Chunk?) =

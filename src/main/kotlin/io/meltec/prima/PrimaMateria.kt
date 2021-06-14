@@ -18,7 +18,6 @@ object PrimaMateria : ModInitializer {
     PrimaItems.register()
     PrimaBlocks.register()
     PrimaBlockEntities.register()
-    PrimaOres.register()
     PrimaWorldGen.register()
     PrimaRecipes.register()
   }

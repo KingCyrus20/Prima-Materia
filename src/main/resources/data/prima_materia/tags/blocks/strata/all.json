@@ -1,0 +1,25 @@
+{
+  "replace": false,
+  "values": [
+    "prima_materia:strata/sedimentary/chalk",
+    "prima_materia:strata/sedimentary/chert",
+    "prima_materia:strata/sedimentary/dolomite",
+    "prima_materia:strata/sedimentary/limestone",
+    "prima_materia:strata/sedimentary/shale",
+    "prima_materia:strata/sedimentary/sandstone",
+    "prima_materia:strata/metamorphic/gneiss",
+    "prima_materia:strata/metamorphic/marble",
+    "prima_materia:strata/metamorphic/phylite",
+    "prima_materia:strata/metamorphic/quartzite",
+    "prima_materia:strata/metamorphic/schist",
+    "prima_materia:strata/metamorphic/slate",
+    "prima_materia:strata/igneous/andesite",
+    "prima_materia:strata/igneous/basalt",
+    "prima_materia:strata/igneous/dacite",
+    "prima_materia:strata/igneous/diorite",
+    "prima_materia:strata/igneous/gabbro",
+    "prima_materia:strata/igneous/granite",
+    "prima_materia:strata/igneous/peridotite",
+    "prima_materia:strata/igneous/rhyolite"
+  ]
+}

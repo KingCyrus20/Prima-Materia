@@ -5,6 +5,8 @@ import com.mojang.serialization.codecs.RecordCodecBuilder
 import java.util.*
 import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
+import net.minecraft.predicate.BlockPredicate
+import net.minecraft.structure.rule.RuleTest
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.noise.OctavePerlinNoiseSampler
 import net.minecraft.world.StructureWorldAccess
@@ -18,9 +20,13 @@ import net.minecraft.world.gen.feature.FeatureConfig
  * determines the Y bounding box. The threshold should be between 0.0 and 1.0 and determine how high
  * the perlin noise has to be for a given tile to be a solid block; values between 0.1 and 0.4 are
  * recommended.
+ *
+ * The state is the ore state to generate, and the predicate determines which blocks can
+ * be replaced by ores.
  */
 data class PerlinOreClusterFeatureConfig(
     val state: BlockState,
+    val predicate: RuleTest,
     val width: Int,
     val height: Int,
     val threshold: Double
@@ -30,6 +36,7 @@ data class PerlinOreClusterFeatureConfig(
         RecordCodecBuilder.create<PerlinOreClusterFeatureConfig> { inst ->
           inst.group(
                   BlockState.CODEC.fieldOf("state").forGetter { it.state },
+                  RuleTest.field_25012.fieldOf("rule").forGetter { it.predicate },
                   Codec.INT.fieldOf("width").forGetter { it.width },
                   Codec.INT.fieldOf("height").forGetter { it.height },
                   Codec.DOUBLE.fieldOf("threshold").forGetter { it.threshold },
@@ -65,7 +72,7 @@ object PerlinOreClusterFeature :
       for (y in startPosition.y..endPosition.y) {
         for (z in startPosition.z..endPosition.z) {
           val position = BlockPos(x, y, z)
-          if (world.getBlockState(position).block != Blocks.STONE) continue
+          if (!config.predicate.test(world.getBlockState(position), chRandom)) continue
           val distance =
               pos.getManhattanDistance(position).toDouble() /
                   config.width.coerceAtLeast(config.height)

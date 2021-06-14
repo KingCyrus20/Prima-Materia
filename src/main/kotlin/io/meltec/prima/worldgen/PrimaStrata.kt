@@ -3,7 +3,15 @@ package io.meltec.prima.worldgen
 import io.meltec.prima.util.PrimaIdentifier
 import java.util.*
 import net.fabricmc.fabric.api.tag.TagRegistry
+import net.minecraft.block.Block
 import net.minecraft.block.BlockState
+
+/** The fundamental strata types. */
+enum class Strata {
+  SEDIMENTARY,
+  METAMORPHIC,
+  IGNEOUS
+}
 
 /** Obtain strata for each layer. */
 object PrimaStrata {
@@ -22,5 +30,14 @@ object PrimaStrata {
         2 -> STRATA3_TAG.getRandom(rng).defaultState
         3 -> STRATA4_TAG.getRandom(rng).defaultState
         else -> STRATA1_TAG.getRandom(rng).defaultState
+      }
+
+  /** Determine the type of strata the given block is, returning null if it is not a strata block. */
+  fun typeOf(strata: Block): Strata? =
+      when {
+        strata.isIn(SEDIMENTARY_TAG) -> Strata.SEDIMENTARY
+        strata.isIn(METAMORPHIC_TAG) -> Strata.METAMORPHIC
+        strata.isIn(IGNEOUS_TAG) -> Strata.IGNEOUS
+        else -> null
       }
 }

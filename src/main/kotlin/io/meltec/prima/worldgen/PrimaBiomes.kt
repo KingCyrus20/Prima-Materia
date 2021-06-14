@@ -36,12 +36,6 @@ object PrimaBiomes {
       for (feature in features) newGenSettings.feature(index, feature)
     }
 
-    // Add Prima Materia custom ore generation...
-    // TODO: This is temporary, rework how this works.
-    newGenSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, PrimaOres.ORE_COPPER_OVERWORLD)
-    newGenSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, PrimaOres.ORE_TIN_OVERWORLD)
-    newGenSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, PrimaOres.ORE_ZINC_OVERWORLD)
-
     // Copy over the default carvers verbatim.
     for (carverStep in GenerationStep.Carver.values()) {
       for (carver in biome.generationSettings.getCarversForStep(carverStep)) {

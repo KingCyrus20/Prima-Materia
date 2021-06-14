@@ -1,0 +1,23 @@
+{
+  "replace": false,
+  "values": [
+    "prima_materia:ore/copper",
+    "prima_materia:ore/zinc",
+    "prima_materia:ore/galena",
+    "prima_materia:ore/bismuthinite",
+    "prima_materia:ore/orpiment",
+    "prima_materia:ore/stibnite",
+    "prima_materia:ore/borax",
+    "prima_materia:ore/magnesite",
+    "prima_materia:ore/hematite",
+    "prima_materia:ore/gold",
+    "prima_materia:ore/saltpeter",
+    "prima_materia:ore/rock_salt",
+    "prima_materia:ore/corundum",
+    "prima_materia:ore/bauxite",
+    "prima_materia:ore/pyrite",
+    "prima_materia:ore/chalcopyrite",
+    "prima_materia:ore/bituminous_coal",
+    "prima_materia:ore/lignite"
+  ]
+}
