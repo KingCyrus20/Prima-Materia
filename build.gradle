@@ -32,13 +32,13 @@ dependencies {
     modImplementation "top.theillusivec4.caelus:caelus-fabric:${project.caelus_version}"
     include "top.theillusivec4.caelus:caelus-fabric:${project.caelus_version}"
 
-    modRuntime("me.jellysquid.mods:sodium-fabric") {
+    implementation("me.jellysquid.mods:sodium-fabric") {
         version {
             branch = "1.16.x/next"
         }
         transitive = false
     }
-    modRuntime("link.infra:Indium") {
+    implementation("link.infra:Indium") {
         version {
             branch = "1.16.x/main"
         }
