@@ -32,6 +32,19 @@ dependencies {
     modImplementation "top.theillusivec4.caelus:caelus-fabric:${project.caelus_version}"
     include "top.theillusivec4.caelus:caelus-fabric:${project.caelus_version}"
 
+    modRuntime("me.jellysquid.mods:sodium-fabric") {
+        version {
+            branch = "1.16.x/next"
+        }
+        transitive = false
+    }
+    modRuntime("link.infra:Indium") {
+        version {
+            branch = "1.16.x/main"
+        }
+        transitive = false
+    }
+
     // Third party
     modRuntime "me.shedaniel:RoughlyEnoughItems:${project.rei_version}"
     modRuntime ("com.github.SuperCoder7979:databreaker:${project.databreaker_version}") {

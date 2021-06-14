@@ -14,3 +14,12 @@ pluginManagement {
     }
 
 }
+
+sourceControl {
+    gitRepository("https://github.com/CaffeineMC/sodium-fabric.git") {
+        producesModule("me.jellysquid.mods:sodium-fabric")
+    }
+    gitRepository("https://github.com/comp500/Indium.git") {
+        producesModule("link.infra:Indium")
+    }
+}
