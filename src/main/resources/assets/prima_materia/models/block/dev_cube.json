@@ -1,5 +1,6 @@
 {
   "parent": "block/cube_all",
+  "object": "prima_materia:block/dev_cube",
   "textures": {
     "all": "prima_materia:block/dev_cube"
   }

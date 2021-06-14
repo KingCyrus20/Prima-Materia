@@ -5,9 +5,6 @@ import com.google.gson.GsonBuilder
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonElement
 import com.mojang.datafixers.util.Either
-import java.io.Reader
-import java.lang.reflect.Type
-import java.util.function.Function
 import net.fabricmc.fabric.api.renderer.v1.RendererAccess
 import net.minecraft.client.render.model.BakedModel
 import net.minecraft.client.render.model.ModelBakeSettings
@@ -23,6 +20,9 @@ import net.minecraft.client.texture.Sprite
 import net.minecraft.client.util.SpriteIdentifier
 import net.minecraft.util.Identifier
 import net.minecraft.util.JsonHelper
+import java.io.Reader
+import java.lang.reflect.Type
+import java.util.function.Function
 
 class PrimaJsonUnbakedModel(
     parentId: Identifier?,
@@ -32,10 +32,18 @@ class PrimaJsonUnbakedModel(
     guiLight: GuiLight?,
     transformations: ModelTransformation,
     overrides: MutableList<ModelOverride>,
+    val primaObjId: Identifier?,
 ) :
     JsonUnbakedModel(
         parentId, elements, textureMap, ambientOcclusion, guiLight, transformations, overrides) {
-  lateinit var primaObj: PrimaObj
+  var primaObj: PrimaObj? = null
+  private val obj: PrimaObj?
+    get() {
+      val parent = parent
+      return if (primaObj == null && parent is PrimaJsonUnbakedModel) {
+        parent.primaObj
+      } else primaObj
+    }
 
   override fun bake(
       loader: ModelLoader,
@@ -46,7 +54,8 @@ class PrimaJsonUnbakedModel(
       hasDepth: Boolean
   ): BakedModel? {
     val bakedModel = super.bake(loader, parent, textureGetter, settings, id, hasDepth)
-    return if (this::primaObj.isInitialized) {
+    val primaObj = obj
+    return if (primaObj != null) {
       val renderer = RendererAccess.INSTANCE.renderer ?: return null
       val sprite = textureGetter.apply(resolveSprite("all"))
       val mesh = renderer.meshBuilder().createMeshFrom(primaObj, sprite, settings.rotation)
@@ -73,17 +82,17 @@ class PrimaJsonUnbakedModel(
             GuiLight.deserialize(JsonHelper.getString(jsonObject, "gui_light"))
           } else null
 
-      val identifier =
-          deserializeParent(jsonObject).takeUnless { it.isEmpty() }?.let { Identifier(it) }
+      fun String.createId(): Identifier? = takeUnless { it.isEmpty() }?.let { Identifier(it) }
 
       return PrimaJsonUnbakedModel(
-          identifier,
+          deserializeParent(jsonObject).createId(),
           deserializeElements(jsonDeserializationContext, jsonObject),
           deserializeTextures(jsonObject),
           deserializeAmbientOcclusion(jsonObject),
           guiLight,
           modelTransformation,
-          deserializeOverrides(jsonDeserializationContext, jsonObject))
+          deserializeOverrides(jsonDeserializationContext, jsonObject),
+          JsonHelper.getString(jsonObject, "object", "").createId())
     }
   }
 

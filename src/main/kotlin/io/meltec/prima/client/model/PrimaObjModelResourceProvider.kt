@@ -20,11 +20,15 @@ class PrimaObjModelResourceProvider(private val resourceManager: ResourceManager
     val jsonUnbakedModel =
         PrimaJsonUnbakedModel.deserialize(
             resourceManager.getResource(qualifiedJsonId).inputStream.reader())
+            ?: return null
 
-    val qualifiedObjId = with(resourceId) { Identifier(namespace, "models/$path.obj") }
-    if (resourceManager.containsResource(qualifiedObjId)) {
-      jsonUnbakedModel?.primaObj =
-          PrimaObj.read(resourceManager.getResource(qualifiedObjId).inputStream.reader())
+    if (jsonUnbakedModel.primaObjId != null) {
+      val qualifiedObjId =
+          with(jsonUnbakedModel.primaObjId) { Identifier(namespace, "models/$path.obj") }
+      if (resourceManager.containsResource(qualifiedObjId)) {
+        jsonUnbakedModel.primaObj =
+            PrimaObj.read(resourceManager.getResource(qualifiedObjId).inputStream.reader())
+      }
     }
 
     return jsonUnbakedModel

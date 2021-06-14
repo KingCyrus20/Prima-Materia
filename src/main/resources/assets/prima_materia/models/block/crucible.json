@@ -1,5 +1,6 @@
 {
   "parent": "block/cube_all",
+  "object": "prima_materia:block/crucible",
   "textures": {
     "all": "prima_materia:block/crucible"
   }
