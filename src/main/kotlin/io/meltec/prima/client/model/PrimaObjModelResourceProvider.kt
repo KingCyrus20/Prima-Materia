@@ -26,7 +26,7 @@ class PrimaObjModelResourceProvider(private val resourceManager: ResourceManager
       val qualifiedObjId =
           with(jsonUnbakedModel.primaObjId) { Identifier(namespace, "models/$path.obj") }
       if (resourceManager.containsResource(qualifiedObjId)) {
-        jsonUnbakedModel.primaObj =
+        jsonUnbakedModel._primaObj =
             PrimaObj.read(resourceManager.getResource(qualifiedObjId).inputStream.reader())
       }
     }

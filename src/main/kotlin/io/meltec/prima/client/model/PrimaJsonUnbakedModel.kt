@@ -5,10 +5,12 @@ import com.google.gson.GsonBuilder
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonElement
 import com.mojang.datafixers.util.Either
+import com.mojang.datafixers.util.Pair
 import net.fabricmc.fabric.api.renderer.v1.RendererAccess
 import net.minecraft.client.render.model.BakedModel
 import net.minecraft.client.render.model.ModelBakeSettings
 import net.minecraft.client.render.model.ModelLoader
+import net.minecraft.client.render.model.UnbakedModel
 import net.minecraft.client.render.model.json.JsonUnbakedModel
 import net.minecraft.client.render.model.json.ModelElement
 import net.minecraft.client.render.model.json.ModelElementFace
@@ -33,17 +35,42 @@ class PrimaJsonUnbakedModel(
     transformations: ModelTransformation,
     overrides: MutableList<ModelOverride>,
     val primaObjId: Identifier?,
+    private val _layerCount: Int?
 ) :
     JsonUnbakedModel(
         parentId, elements, textureMap, ambientOcclusion, guiLight, transformations, overrides) {
-  var primaObj: PrimaObj? = null
-  private val obj: PrimaObj?
+
+  internal var _primaObj: PrimaObj? = null
+  private val primaObj: PrimaObj?
     get() {
       val parent = parent
-      return if (primaObj == null && parent is PrimaJsonUnbakedModel) {
+      return if (_primaObj == null && parent is PrimaJsonUnbakedModel) {
         parent.primaObj
-      } else primaObj
+      } else _primaObj
     }
+
+  private val layerCount: Int
+    get() {
+      val parent = parent
+      val layerCount =
+          if (_layerCount == null && parent is PrimaJsonUnbakedModel) {
+            parent.layerCount
+          } else _layerCount
+      return layerCount ?: 1
+    }
+
+  override fun getTextureDependencies(
+      unbakedModelGetter: Function<Identifier, UnbakedModel>?,
+      unresolvedTextureReferences: MutableSet<Pair<String, String>>?
+  ): MutableCollection<SpriteIdentifier> {
+    val set =
+        super.getTextureDependencies(unbakedModelGetter, unresolvedTextureReferences).toMutableSet()
+    for ((_, value) in textureMap) {
+      value.left().takeIf { it.isPresent }?.let { set.add(it.get()) }
+      value.right().takeIf { it.isPresent }?.let { set.add(resolveSprite(it.get())) }
+    }
+    return set
+  }
 
   override fun bake(
       loader: ModelLoader,
@@ -54,12 +81,15 @@ class PrimaJsonUnbakedModel(
       hasDepth: Boolean
   ): BakedModel? {
     val bakedModel = super.bake(loader, parent, textureGetter, settings, id, hasDepth)
-    val primaObj = obj
+    val primaObj = primaObj
     return if (primaObj != null) {
       val renderer = RendererAccess.INSTANCE.renderer ?: return null
-      val sprite = textureGetter.apply(resolveSprite("all"))
-      val mesh = renderer.meshBuilder().createMeshFrom(primaObj, sprite, settings.rotation)
-      PrimaObjBakedModel(mesh, sprite, bakedModel)
+      val layers = Array(layerCount) { textureGetter.apply(resolveSprite("layer$it")) }
+      val mesh =
+          renderer
+              .meshBuilder()
+              .createMeshFrom(primaObj, layers, settings.rotation, renderer.materialFinder())
+      PrimaObjBakedModel(mesh, layers, bakedModel)
     } else bakedModel
   }
 
@@ -92,7 +122,8 @@ class PrimaJsonUnbakedModel(
           guiLight,
           modelTransformation,
           deserializeOverrides(jsonDeserializationContext, jsonObject),
-          JsonHelper.getString(jsonObject, "object", "").createId())
+          JsonHelper.getString(jsonObject, "object", "").createId(),
+          JsonHelper.getInt(jsonObject, "layers", 0).takeIf { it > 0 })
     }
   }
 

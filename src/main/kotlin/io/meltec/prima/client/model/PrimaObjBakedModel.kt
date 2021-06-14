@@ -18,7 +18,7 @@ import java.util.function.Supplier
 
 class PrimaObjBakedModel(
     private val mesh: Mesh,
-    private val sprite: Sprite,
+    private val layers: Array<Sprite>,
     private val delegate: BakedModel? = null,
 ) : BakedModel, FabricBakedModel {
   override fun isVanillaAdapter() = false
@@ -63,7 +63,7 @@ class PrimaObjBakedModel(
 
   override fun isBuiltin() = false
 
-  override fun getSprite() = delegate?.sprite ?: sprite
+  override fun getSprite() = delegate?.sprite ?: layers[0]
 
   override fun getTransformation() = delegate?.transformation ?: ModelTransformation.NONE!!
 

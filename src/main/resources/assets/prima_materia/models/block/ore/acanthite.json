@@ -1,6 +1,7 @@
 {
-  "parent": "block/cube_all",
+  "parent": "prima_materia:block/ore/masked",
   "textures": {
-    "all": "prima_materia:block/ore/acanthite"
+    "strata": "prima_materia:block/strata/sedimentary/chalk",
+    "ore": "prima_materia:block/oremasks/acanthite_oremask"
   }
 }

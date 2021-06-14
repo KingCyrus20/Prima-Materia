@@ -1,7 +1,7 @@
 {
-  "parent": "block/cube_all",
+  "parent": "block/block",
   "object": "prima_materia:block/crucible",
   "textures": {
-    "all": "prima_materia:block/crucible"
+    "layer0": "prima_materia:block/crucible"
   }
 }

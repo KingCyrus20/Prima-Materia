@@ -6,6 +6,8 @@ import io.meltec.prima.util.v
 import io.meltec.prima.util.x
 import io.meltec.prima.util.y
 import io.meltec.prima.util.z
+import net.fabricmc.fabric.api.renderer.v1.material.BlendMode
+import net.fabricmc.fabric.api.renderer.v1.material.MaterialFinder
 import net.fabricmc.fabric.api.renderer.v1.mesh.Mesh
 import net.fabricmc.fabric.api.renderer.v1.mesh.MeshBuilder
 import net.fabricmc.fabric.api.renderer.v1.mesh.MutableQuadView
@@ -17,29 +19,35 @@ private const val BLOCK_CENTER = 0.5f
 
 fun MeshBuilder.createMeshFrom(
     model: PrimaObj,
-    sprite: Sprite,
+    layers: Array<Sprite>,
     transformation: AffineTransformation,
+    materialFinder: MaterialFinder,
 ): Mesh {
-  emitter.createMeshFrom(model, sprite, transformation)
+  emitter.createMeshFrom(model, layers, transformation, materialFinder)
   return build()
 }
 
-private fun QuadEmitter.createMeshFrom(
+fun QuadEmitter.createMeshFrom(
     model: PrimaObj,
-    sprite: Sprite,
+    layers: Array<Sprite>,
     transformation: AffineTransformation,
+    materialFinder: MaterialFinder,
 ) {
+  val translucent = materialFinder.blendMode(0, BlendMode.TRANSLUCENT).find()
   for (face in model.faces) {
-    for ((index, vertex) in face.withIndex()) {
-      createVertexFrom(model, index, vertex, transformation)
+    for ((layer, layerSprite) in layers.withIndex()) {
+      if (layer > 0) material(translucent)
+      for ((index, vertex) in face.withIndex()) {
+        createVertexFrom(model, index, vertex, transformation)
+      }
+
+      // If we have a triangle, add another vertex to statisfy quad view
+      if (face.size == 3) copyVertex(from = 2, to = 3)
+
+      // Attach the texture to the current quad
+      spriteBake(0, layerSprite, MutableQuadView.BAKE_NORMALIZED)
+      emit()
     }
-
-    // If we have a triangle, add another vertex to statisfy quad view
-    if (face.size == 3) copyVertex(from = 2, to = 3)
-
-    // Attach the texture to the current quad
-    spriteBake(0, sprite, MutableQuadView.BAKE_NORMALIZED or MutableQuadView.BAKE_FLIP_V)
-    emit()
   }
 }
 
@@ -63,7 +71,7 @@ private fun QuadEmitter.createVertexFrom(
 
   // Set up the texture coordinates and material color
   with(model.texCoords[texIndex]) { sprite(index, 0, u, v) }
-  spriteColor(index, 0, /* color= */ 0xFFFFFF)
+  spriteColor(index, 0, /* color= */ -1)
 }
 
 private fun QuadEmitter.copyVertex(from: Int, to: Int) {
