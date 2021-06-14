@@ -43,10 +43,10 @@ class PrimaDelegatingChunkGenerator(
               .apply(inst, ::PrimaDelegatingChunkGenerator)
         }
 
-    /** The width of each strata region in chunks; strata regions will be this size, on average. */
-    const val STRATA_REGION_WIDTH = 32
-    /** Computed value; the width of a strata region in blocks. */
-    const val STRATA_REGION_WIDTH_BLOCKS = STRATA_REGION_WIDTH * 16
+    /** The size of the region within which strata control points are sampled. */
+    val STRATA_REGION = Region(32)
+    /** The size of the region in which ore control points are sampled. */
+    val ORE_REGION = Region(8)
   }
 
   private val delegate = NoiseChunkGenerator(biomes, seed) { this.settings }
@@ -64,6 +64,7 @@ class PrimaDelegatingChunkGenerator(
     super.generateFeatures(region, accessor)
 
     this.buildRockLayers(region.getChunk(region.centerChunkX, region.centerChunkZ))
+    this.buildOreVeins(region)
   }
 
   /** Build the 4 layers of rock strata top to bottom. */
@@ -104,8 +105,8 @@ class PrimaDelegatingChunkGenerator(
     val biasX = strataNoise.sample(x.toDouble() / 50.0, 0.0, z.toDouble() / 50.0, 0.0, 0.0)
     val biasZ = strataNoise.sample(x.toDouble() / 50.0, 127.0, z.toDouble() / 50.0, 0.0, 0.0)
 
-    val dx = (biasX * STRATA_REGION_WIDTH_BLOCKS / 3).toInt()
-    val dz = (biasZ * STRATA_REGION_WIDTH_BLOCKS / 3).toInt()
+    val dx = (biasX * STRATA_REGION.blockWidth / 3).toInt()
+    val dz = (biasZ * STRATA_REGION.blockWidth / 3).toInt()
 
     return controls.minByOrNull { point -> abs(point.x - x - dx) + abs(point.z - z - dz) }?.rock
         ?: Blocks.STONE.defaultState
@@ -117,9 +118,7 @@ class PrimaDelegatingChunkGenerator(
       chunkZ: Int,
       layer: Int
   ): Array<StrataControlPoint> {
-    // Simulate division which rounds down instead of truncation.
-    val centerRegionX = (chunkX - STRATA_REGION_WIDTH + 1) / STRATA_REGION_WIDTH
-    val centerRegionZ = (chunkZ - STRATA_REGION_WIDTH + 1) / STRATA_REGION_WIDTH
+    val (centerRegionX, centerRegionZ) = STRATA_REGION.toRegionCoords(chunkX, chunkZ)
 
     return Array(9) { i ->
       val dx = (i / 3) - 1
@@ -136,11 +135,14 @@ class PrimaDelegatingChunkGenerator(
           regionX,
           regionZ,
           layer,
-          regionX * STRATA_REGION_WIDTH_BLOCKS + rng.nextInt(STRATA_REGION_WIDTH_BLOCKS),
-          regionZ * STRATA_REGION_WIDTH_BLOCKS + rng.nextInt(STRATA_REGION_WIDTH_BLOCKS),
+          regionX * STRATA_REGION.blockWidth + rng.nextInt(STRATA_REGION.blockWidth),
+          regionZ * STRATA_REGION.blockWidth + rng.nextInt(STRATA_REGION.blockWidth),
           blockState)
     }
   }
+
+  /** Sample locations for ore veins. */
+  private fun buildOreVeins(region: ChunkRegion) {}
 
   /** Delegates for methods which we let another chunk generator do. */
   override fun buildSurface(region: ChunkRegion?, chunk: Chunk?) =
@@ -179,4 +181,13 @@ class PrimaDelegatingChunkGenerator(
       val z: Int,
       val rock: BlockState
   )
+
+  /** Region object which tracks regions. */
+  data class Region(val width: Int) {
+    val blockWidth = width * 16
+
+    /** Convert a chunk coordinate to it's corresponding region coordinate. */
+    fun toRegionCoord(chunkCoord: Int) = (chunkCoord - width + 1) / width
+    fun toRegionCoords(chunkX: Int, chunkZ: Int) = toRegionCoord(chunkX) to toRegionCoord(chunkZ)
+  }
 }
