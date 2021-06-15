@@ -15,6 +15,7 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.item.PickaxeItem
 import net.minecraft.item.ToolMaterial
+import net.minecraft.tag.BlockTags
 import net.minecraft.tag.Tag
 import net.minecraft.text.Text
 import net.minecraft.world.World
@@ -31,10 +32,10 @@ class PrimaPickaxeItem(material: ToolMaterial?, attackDamage: Int, attackSpeed: 
     stack: ItemStack,
     user: LivingEntity?
   ): Float {
-    val material = state.material
-    return if (material != Material.METAL && material != Material.REPAIR_STATION && material != Material.STONE) super<DynamicAttributeTool>.getMiningSpeedMultiplier(
-        tag, state, stack, user)
-    else stack.tag?.getFloat("mining_speed") ?: 1.0f
+    return if (BlockTags.PICKAXE_MINEABLE.contains(state.block))
+      stack.tag?.getFloat("mining_speed") ?: 1.0f
+    else
+      1.0f
   }
 
   override fun getMiningLevel(
