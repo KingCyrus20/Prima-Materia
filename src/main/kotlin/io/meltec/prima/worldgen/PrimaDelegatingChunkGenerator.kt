@@ -67,7 +67,7 @@ class PrimaDelegatingChunkGenerator(
   override fun generateFeatures(region: ChunkRegion, accessor: StructureAccessor) {
     super.generateFeatures(region, accessor)
 
-    this.buildRockLayers(region.getChunk(region.centerPos.centerX, region.centerPos.centerZ))
+    this.buildRockLayers(region.getChunk(region.centerPos.x, region.centerPos.z))
     this.buildOreVeins(region)
   }
 
@@ -113,9 +113,7 @@ class PrimaDelegatingChunkGenerator(
 
   private fun sampleStrataHeight(regionHeight: Int, x: Int, z: Int, layer: Int): Int =
       regionHeight +
-          (this.seaLevel / 17.0 *
-                  strataNoise.sample(x / 50.0, layer.toDouble(), z / 50.0, 0.0, 0.0))
-              .toInt()
+          (this.seaLevel / 17.0 * strataNoise.sample(x / 50.0, layer.toDouble(), z / 50.0)).toInt()
 
   /** Sample a specific strata block at a block position using the strata control points. */
   private fun sampleStrata(
@@ -166,12 +164,12 @@ class PrimaDelegatingChunkGenerator(
 
   /** Sample locations for ore veins. */
   private fun buildOreVeins(region: ChunkRegion) {
-    val oreSpots = numOrePoints(region.centerPos.centerX, region.centerPos.centerZ)
+    val oreSpots = numOrePoints(region.centerPos.x, region.centerPos.z)
     if (oreSpots == 0) return
 
-    val chunk = region.getChunk(region.centerPos.centerX, region.centerPos.centerZ)
+    val chunk = region.getChunk(region.centerPos.x, region.centerPos.z)
     val rng =
-        ChunkRandom().also { it.setTerrainSeed(region.centerPos.centerX, region.centerPos.centerZ) }
+        ChunkRandom().also { it.setTerrainSeed(region.centerPos.x, region.centerPos.z) }
     for (spotId in 1..oreSpots) {
       val lx = rng.nextInt(16)
       val lz = rng.nextInt(16)
@@ -186,8 +184,8 @@ class PrimaDelegatingChunkGenerator(
       val ore = PrimaOres.sampleOre(strataBlock, rng)
       val config = PrimaOres.oreConfig(ore, strataBlock)
 
-      println("Generating ore vein ${ore.name} at ${position.x}, ${position.y}, ${position.z}")
-      PerlinOreClusterFeature.generate(region, this, rng, position, config)
+      println("Generating ore vein ${ore.translationKey} at ${position.x}, ${position.y}, ${position.z}")
+      PerlinOreClusterFeature.generate(region, rng, position, config)
     }
   }
 

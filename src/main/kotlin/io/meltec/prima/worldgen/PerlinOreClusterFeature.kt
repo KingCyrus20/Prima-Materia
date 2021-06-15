@@ -8,7 +8,6 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.noise.OctavePerlinNoiseSampler
 import net.minecraft.world.StructureWorldAccess
 import net.minecraft.world.gen.ChunkRandom
-import net.minecraft.world.gen.chunk.ChunkGenerator
 import net.minecraft.world.gen.feature.Feature
 import net.minecraft.world.gen.feature.FeatureConfig
 import net.minecraft.world.gen.feature.util.FeatureContext
@@ -54,19 +53,17 @@ object PerlinOreClusterFeature :
   private const val DOWNSCALE_FACTOR = 32.0
 
   override fun generate(context: FeatureContext<PerlinOreClusterFeatureConfig>): Boolean {
-    return generate(
-        context.world, context.generator, context.random, context.origin, context.config)
+    return generate(context.world, context.random, context.origin, context.config)
   }
 
   fun generate(
-      world: StructureWorldAccess,
-      chunkGenerator: ChunkGenerator,
-      random: Random,
-      pos: BlockPos,
-      config: PerlinOreClusterFeatureConfig
+    world: StructureWorldAccess,
+    random: Random,
+    pos: BlockPos,
+    config: PerlinOreClusterFeatureConfig
   ): Boolean {
     val chRandom = ChunkRandom(random.nextLong())
-    val octaveSampler = OctavePerlinNoiseSampler(chRandom, listOf(1, 2, 4))
+    val octaveSampler = OctavePerlinNoiseSampler(chRandom, listOf(0, -1, -2, -4))
 
     val delta = BlockPos((config.width - 1) / 2, (config.height - 1) / 2, (config.width - 1) / 2)
     val startPosition = pos.add(-delta.x, -delta.y, -delta.z)

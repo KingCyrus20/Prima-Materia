@@ -49,8 +49,8 @@ object PrimaWorldGen {
                   127,
                   0,
                   false,
-                  false,
-                  false,
+                  true,
+                  true,
                   false,
                   false,
                   false))
