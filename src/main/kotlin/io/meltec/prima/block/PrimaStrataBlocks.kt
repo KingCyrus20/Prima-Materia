@@ -1,6 +1,7 @@
 package io.meltec.prima.block
 
 import net.fabricmc.fabric.api.`object`.builder.v1.block.FabricBlockSettings
+import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags
 import net.minecraft.block.Block
 import net.minecraft.block.Material
 
@@ -9,7 +10,7 @@ object PrimaStrataBlocks : PrimaBlockRegistry {
   private val blockRegistry = mutableMapOf<String, Block>()
   private val strataBlockProvider = BlockProvider {
     // TODO: Mining level?
-    Block(FabricBlockSettings.of(Material.STONE).requiresTool())
+    Block(FabricBlockSettings.of(Material.STONE).requiresTool().breakByTool(FabricToolTags.PICKAXES))
   }
 
   object Igneous : PrimaBlockRegistry by PrimaStrataBlocks {
