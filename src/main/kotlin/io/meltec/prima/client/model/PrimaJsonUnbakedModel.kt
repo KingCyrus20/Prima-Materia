@@ -6,6 +6,9 @@ import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonElement
 import com.mojang.datafixers.util.Either
 import com.mojang.datafixers.util.Pair
+import java.io.Reader
+import java.lang.reflect.Type
+import java.util.function.Function
 import net.fabricmc.fabric.api.renderer.v1.RendererAccess
 import net.minecraft.client.render.model.BakedModel
 import net.minecraft.client.render.model.ModelBakeSettings
@@ -22,9 +25,6 @@ import net.minecraft.client.texture.Sprite
 import net.minecraft.client.util.SpriteIdentifier
 import net.minecraft.util.Identifier
 import net.minecraft.util.JsonHelper
-import java.io.Reader
-import java.lang.reflect.Type
-import java.util.function.Function
 
 class PrimaJsonUnbakedModel(
     parentId: Identifier?,
@@ -109,19 +109,19 @@ class PrimaJsonUnbakedModel(
 
       val guiLight =
           if (jsonObject.has("gui_light")) {
-            GuiLight.deserialize(JsonHelper.getString(jsonObject, "gui_light"))
+            GuiLight.byName(JsonHelper.getString(jsonObject, "gui_light"))
           } else null
 
       fun String.createId(): Identifier? = takeUnless { it.isEmpty() }?.let { Identifier(it) }
 
       return PrimaJsonUnbakedModel(
-          deserializeParent(jsonObject).createId(),
-          deserializeElements(jsonDeserializationContext, jsonObject),
-          deserializeTextures(jsonObject),
-          deserializeAmbientOcclusion(jsonObject),
+          parentFromJson(jsonObject).createId(),
+          elementsFromJson(jsonDeserializationContext, jsonObject),
+          texturesFromJson(jsonObject),
+          ambientOcclusionFromJson(jsonObject),
           guiLight,
           modelTransformation,
-          deserializeOverrides(jsonDeserializationContext, jsonObject),
+          overridesFromJson(jsonDeserializationContext, jsonObject),
           JsonHelper.getString(jsonObject, "object", "").createId(),
           JsonHelper.getInt(jsonObject, "layers", 0).takeIf { it > 0 })
     }

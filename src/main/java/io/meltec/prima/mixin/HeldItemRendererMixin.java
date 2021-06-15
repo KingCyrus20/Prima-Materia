@@ -9,7 +9,6 @@ import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.item.HeldItemRenderer;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Arm;
@@ -18,6 +17,7 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3f;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -78,7 +78,7 @@ public abstract class HeldItemRendererMixin {
         Vec3d delta = player.getPos().subtract(hitResult.getPos());
         double deltaForward =
             abs(player.getHorizontalFacing().getAxis().choose(delta.x, delta.y, delta.z));
-        matrices.translate(0, 0, -MathHelper.sqrt(deltaForward * deltaForward + 4));
+        matrices.translate(0, 0, -MathHelper.sqrt((float) (deltaForward * deltaForward + 4)));
       }
       int midPoint = 10;
       float rotation;
@@ -88,9 +88,9 @@ public abstract class HeldItemRendererMixin {
       } else {
         rotation = midPoint + midPoint - currentPoint;
       }
-      matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(90f));
-      matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(-15f));
-      matrices.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion(90f + rotation));
+      matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(90f));
+      matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(-15f));
+      matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(90f + rotation));
 
       boolean bl4 = arm == Arm.RIGHT;
       renderItem(

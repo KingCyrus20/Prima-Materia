@@ -14,7 +14,7 @@ import net.minecraft.world.BlockView
 
 object DevCubeBlock :
     Block(FabricBlockSettings.of(Material.STONE).nonOpaque()), BlockEntityProvider {
-  override fun createBlockEntity(world: BlockView) = DevCubeBlockEntity()
+  override fun createBlockEntity(pos: BlockPos, state: BlockState) = DevCubeBlockEntity(pos, state)
 
   // TODO: Figure out a way to get this from the model
   override fun getOutlineShape(

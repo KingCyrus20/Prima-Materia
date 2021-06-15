@@ -2,6 +2,7 @@ package io.meltec.prima.mixin;
 
 import net.minecraft.client.render.SkyProperties;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.gen.Accessor;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -13,6 +14,7 @@ public abstract class SkyPropertiesMixin {
   abstract SkyProperties.SkyType getSkyType();
 
   @SuppressWarnings("SameParameterValue")
+  @Mutable
   @Accessor("cloudsHeight")
   abstract void setCloudsHeight(float cloudsHeight);
 

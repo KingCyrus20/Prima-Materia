@@ -2,10 +2,7 @@ package io.meltec.prima.worldgen
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import java.util.*
 import net.minecraft.block.BlockState
-import net.minecraft.block.Blocks
-import net.minecraft.predicate.BlockPredicate
 import net.minecraft.structure.rule.RuleTest
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.noise.OctavePerlinNoiseSampler
@@ -14,6 +11,8 @@ import net.minecraft.world.gen.ChunkRandom
 import net.minecraft.world.gen.chunk.ChunkGenerator
 import net.minecraft.world.gen.feature.Feature
 import net.minecraft.world.gen.feature.FeatureConfig
+import net.minecraft.world.gen.feature.util.FeatureContext
+import java.util.*
 
 /**
  * Configure perlin ore generation. The width determines the X/Z bounding box size, while the height
@@ -21,8 +20,8 @@ import net.minecraft.world.gen.feature.FeatureConfig
  * the perlin noise has to be for a given tile to be a solid block; values between 0.1 and 0.4 are
  * recommended.
  *
- * The state is the ore state to generate, and the predicate determines which blocks can
- * be replaced by ores.
+ * The state is the ore state to generate, and the predicate determines which blocks can be replaced
+ * by ores.
  */
 data class PerlinOreClusterFeatureConfig(
     val state: BlockState,
@@ -36,7 +35,7 @@ data class PerlinOreClusterFeatureConfig(
         RecordCodecBuilder.create<PerlinOreClusterFeatureConfig> { inst ->
           inst.group(
                   BlockState.CODEC.fieldOf("state").forGetter { it.state },
-                  RuleTest.field_25012.fieldOf("rule").forGetter { it.predicate },
+                  RuleTest.TYPE_CODEC.fieldOf("rule").forGetter { it.predicate },
                   Codec.INT.fieldOf("width").forGetter { it.width },
                   Codec.INT.fieldOf("height").forGetter { it.height },
                   Codec.DOUBLE.fieldOf("threshold").forGetter { it.threshold },
@@ -54,7 +53,12 @@ object PerlinOreClusterFeature :
     Feature<PerlinOreClusterFeatureConfig>(PerlinOreClusterFeatureConfig.CODEC) {
   private const val DOWNSCALE_FACTOR = 32.0
 
-  override fun generate(
+  override fun generate(context: FeatureContext<PerlinOreClusterFeatureConfig>): Boolean {
+    return generate(
+        context.world, context.generator, context.random, context.origin, context.config)
+  }
+
+  fun generate(
       world: StructureWorldAccess,
       chunkGenerator: ChunkGenerator,
       random: Random,

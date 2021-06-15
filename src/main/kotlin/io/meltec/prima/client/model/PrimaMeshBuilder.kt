@@ -13,7 +13,7 @@ import net.fabricmc.fabric.api.renderer.v1.mesh.MeshBuilder
 import net.fabricmc.fabric.api.renderer.v1.mesh.MutableQuadView
 import net.fabricmc.fabric.api.renderer.v1.mesh.QuadEmitter
 import net.minecraft.client.texture.Sprite
-import net.minecraft.client.util.math.AffineTransformation
+import net.minecraft.util.math.AffineTransformation
 
 private const val BLOCK_CENTER = 0.5f
 

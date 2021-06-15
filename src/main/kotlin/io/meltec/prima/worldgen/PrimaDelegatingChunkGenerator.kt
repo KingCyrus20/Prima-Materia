@@ -2,6 +2,8 @@ package io.meltec.prima.worldgen
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import java.util.concurrent.CompletableFuture
+import java.util.concurrent.Executor
 import kotlin.math.abs
 import kotlin.math.round
 import net.minecraft.block.BlockState
@@ -9,10 +11,9 @@ import net.minecraft.block.Blocks
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.noise.PerlinNoiseSampler
 import net.minecraft.util.registry.Registry
-import net.minecraft.world.BlockView
 import net.minecraft.world.ChunkRegion
+import net.minecraft.world.HeightLimitView
 import net.minecraft.world.Heightmap
-import net.minecraft.world.WorldAccess
 import net.minecraft.world.biome.Biome
 import net.minecraft.world.chunk.Chunk
 import net.minecraft.world.gen.ChunkRandom
@@ -20,6 +21,7 @@ import net.minecraft.world.gen.StructureAccessor
 import net.minecraft.world.gen.chunk.ChunkGenerator
 import net.minecraft.world.gen.chunk.ChunkGeneratorSettings
 import net.minecraft.world.gen.chunk.NoiseChunkGenerator
+import net.minecraft.world.gen.chunk.VerticalBlockSample
 
 /**
  * Chunk generator which relies on another chunk generator to produce the basic noise. Adds rock
@@ -65,7 +67,7 @@ class PrimaDelegatingChunkGenerator(
   override fun generateFeatures(region: ChunkRegion, accessor: StructureAccessor) {
     super.generateFeatures(region, accessor)
 
-    this.buildRockLayers(region.getChunk(region.centerChunkX, region.centerChunkZ))
+    this.buildRockLayers(region.getChunk(region.centerPos.centerX, region.centerPos.centerZ))
     this.buildOreVeins(region)
   }
 
@@ -164,11 +166,12 @@ class PrimaDelegatingChunkGenerator(
 
   /** Sample locations for ore veins. */
   private fun buildOreVeins(region: ChunkRegion) {
-    val oreSpots = numOrePoints(region.centerChunkX, region.centerChunkZ)
+    val oreSpots = numOrePoints(region.centerPos.centerX, region.centerPos.centerZ)
     if (oreSpots == 0) return
 
-    val chunk = region.getChunk(region.centerChunkX, region.centerChunkZ)
-    val rng = ChunkRandom().also { it.setTerrainSeed(region.centerChunkX, region.centerChunkZ) }
+    val chunk = region.getChunk(region.centerPos.centerX, region.centerPos.centerZ)
+    val rng =
+        ChunkRandom().also { it.setTerrainSeed(region.centerPos.centerX, region.centerPos.centerZ) }
     for (spotId in 1..oreSpots) {
       val lx = rng.nextInt(16)
       val lz = rng.nextInt(16)
@@ -207,13 +210,21 @@ class PrimaDelegatingChunkGenerator(
   override fun buildSurface(region: ChunkRegion?, chunk: Chunk?) =
       delegate.buildSurface(region, chunk)
 
-  override fun populateNoise(world: WorldAccess?, accessor: StructureAccessor?, chunk: Chunk?) =
-      delegate.populateNoise(world, accessor, chunk)
+  override fun populateNoise(
+      executor: Executor,
+      accessor: StructureAccessor?,
+      chunk: Chunk?
+  ): CompletableFuture<Chunk> = delegate.populateNoise(executor, accessor, chunk)
 
-  override fun getHeight(x: Int, z: Int, heightmapType: Heightmap.Type?): Int =
-      delegate.getHeight(x, z, heightmapType)
+  override fun getHeight(
+      x: Int,
+      z: Int,
+      heightmapType: Heightmap.Type?,
+      world: HeightLimitView
+  ): Int = delegate.getHeight(x, z, heightmapType, world)
 
-  override fun getColumnSample(x: Int, z: Int): BlockView = delegate.getColumnSample(x, z)
+  override fun getColumnSample(x: Int, z: Int, world: HeightLimitView): VerticalBlockSample =
+      delegate.getColumnSample(x, z, world)
 
   /** May be configurable later; set sea level to half of world height. */
   override fun getSeaLevel(): Int = 127
@@ -222,7 +233,7 @@ class PrimaDelegatingChunkGenerator(
   override fun getWorldHeight(): Int = 256
 
   /** Default spawn height; this takes no arguments so... good luck with your spawn. */
-  override fun getSpawnHeight(): Int = 130
+  override fun getSpawnHeight(world: HeightLimitView): Int = 130
 
   /** Default codec for saving/loading the world generator. */
   override fun getCodec(): Codec<out ChunkGenerator> = CODEC

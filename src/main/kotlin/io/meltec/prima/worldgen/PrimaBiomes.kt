@@ -4,9 +4,9 @@ import com.mojang.serialization.Codec
 import com.mojang.serialization.Lifecycle
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.fabricmc.fabric.mixin.biome.VanillaLayeredBiomeSourceAccessor
+import net.minecraft.util.dynamic.RegistryLookupCodec
 import net.minecraft.util.registry.Registry
 import net.minecraft.util.registry.RegistryKey
-import net.minecraft.util.registry.RegistryLookupCodec
 import net.minecraft.util.registry.SimpleRegistry
 import net.minecraft.world.biome.Biome
 import net.minecraft.world.biome.GenerationSettings

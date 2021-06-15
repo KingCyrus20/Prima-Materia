@@ -32,12 +32,14 @@ object PrimaStrata {
         else -> STRATA1_TAG.getRandom(rng).defaultState
       }
 
-  /** Determine the type of strata the given block is, returning null if it is not a strata block. */
+  /**
+   * Determine the type of strata the given block is, returning null if it is not a strata block.
+   */
   fun typeOf(strata: Block): Strata? =
       when {
-        strata.isIn(SEDIMENTARY_TAG) -> Strata.SEDIMENTARY
-        strata.isIn(METAMORPHIC_TAG) -> Strata.METAMORPHIC
-        strata.isIn(IGNEOUS_TAG) -> Strata.IGNEOUS
+        SEDIMENTARY_TAG.contains(strata) -> Strata.SEDIMENTARY
+        METAMORPHIC_TAG.contains(strata) -> Strata.METAMORPHIC
+        IGNEOUS_TAG.contains(strata) -> Strata.IGNEOUS
         else -> null
       }
 }

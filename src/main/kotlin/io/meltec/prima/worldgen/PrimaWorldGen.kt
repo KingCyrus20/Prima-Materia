@@ -29,6 +29,7 @@ object PrimaWorldGen {
               ChunkGeneratorSettings(
                   StructuresConfig(Optional.empty(), mapOf()),
                   GenerationShapeConfig(
+                      0,
                       256,
                       NoiseSamplingConfig(1.29999999814507745, 0.9999999814507745, 80.0, 160.0),
                       SlideConfig(-10, 3, 0),
@@ -46,6 +47,12 @@ object PrimaWorldGen {
                   -10,
                   0,
                   127,
+                  0,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
                   false))
         }
       }

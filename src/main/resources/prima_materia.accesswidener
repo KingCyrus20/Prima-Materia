@@ -5,7 +5,8 @@ extendable method net/minecraft/client/world/GeneratorType <init> (Ljava/lang/St
 accessible field net/minecraft/client/world/GeneratorType VALUES Ljava/util/List;
 
 # Chunk Generator Settings
-accessible method net/minecraft/world/gen/chunk/ChunkGeneratorSettings <init> (Lnet/minecraft/world/gen/chunk/StructuresConfig;Lnet/minecraft/world/gen/chunk/GenerationShapeConfig;Lnet/minecraft/block/BlockState;Lnet/minecraft/block/BlockState;IIIZ)V
+accessible method net/minecraft/world/gen/chunk/ChunkGeneratorSettings <init> (Lnet/minecraft/world/gen/chunk/StructuresConfig;Lnet/minecraft/world/gen/chunk/GenerationShapeConfig;Lnet/minecraft/block/BlockState;Lnet/minecraft/block/BlockState;IIIIZZZZZZ)V
+accessible method net/minecraft/world/gen/chunk/GenerationShapeConfig <init> (IILnet/minecraft/world/gen/chunk/NoiseSamplingConfig;Lnet/minecraft/world/gen/chunk/SlideConfig;Lnet/minecraft/world/gen/chunk/SlideConfig;IIDDZZZZ)V
 
 # Json Deserializers
 accessible method net/minecraft/client/render/model/json/ModelElement$Deserializer <init> ()V
@@ -16,5 +17,5 @@ accessible method net/minecraft/client/render/model/json/ModelTransformation$Des
 accessible method net/minecraft/client/render/model/json/ModelOverride$Deserializer <init> ()V
 
 # JsonUnbakedModel
-accessible method net/minecraft/client/render/model/json/JsonUnbakedModel$Deserializer deserializeParent (Lcom/google/gson/JsonObject;)Ljava/lang/String;
-accessible method net/minecraft/client/render/model/json/JsonUnbakedModel$Deserializer deserializeTextures (Lcom/google/gson/JsonObject;)Ljava/util/Map;
+accessible method net/minecraft/client/render/model/json/JsonUnbakedModel$Deserializer parentFromJson (Lcom/google/gson/JsonObject;)Ljava/lang/String;
+accessible method net/minecraft/client/render/model/json/JsonUnbakedModel$Deserializer texturesFromJson (Lcom/google/gson/JsonObject;)Ljava/util/Map;
