@@ -17,6 +17,7 @@ repositories {
     maven { url = "https://maven.fabricmc.net/" } // Fabric
     maven { url = "https://maven.shedaniel.me/" } // REI
     maven { url = "https://maven.theillusivec4.top" } // Caelus
+    maven { url = "https://maven.terraformersmc.com/releases" } // Mod Menu
 }
 
 dependencies {
@@ -50,6 +51,7 @@ dependencies {
 
     // Third party
     modRuntime "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
+    modRuntime "com.terraformersmc:modmenu:${project.modmenu_version}"
     // TODO: Build from src or re-enable once JitPack is fixed
     if (false) {
         modRuntime("com.github.SuperCoder7979:databreaker:${project.databreaker_version}") {
