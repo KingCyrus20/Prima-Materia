@@ -33,6 +33,13 @@ dependencies {
     modImplementation "top.theillusivec4.caelus:caelus-fabric:${project.caelus_version}"
     include "top.theillusivec4.caelus:caelus-fabric:${project.caelus_version}"
 
+    implementation("net.devtech:arrp") {
+        version {
+            branch = "master"
+        }
+        transitive = false
+    }
+
     // Disabled until sodium updates to 1.17
     if (false) {
         implementation("me.jellysquid.mods:sodium-fabric") {
@@ -77,7 +84,7 @@ tasks.withType(JavaCompile) {
     // The Minecraft launcher currently installs Java 8 for users, so your mod probably wants to target Java 8 too
     // JDK 9 introduced a new way of specifying this that will make sure no newer classes or methods are used.
     // We'll use that if it's available, but otherwise we'll use the older option.
-    def targetVersion = 8
+    def targetVersion = 16
     if (JavaVersion.current().isJava9Compatible()) {
         it.options.release = targetVersion
     }

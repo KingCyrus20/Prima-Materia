@@ -22,4 +22,7 @@ sourceControl {
     gitRepository("https://github.com/comp500/Indium.git") {
         producesModule("link.infra:Indium")
     }
+    gitRepository("https://github.com/M-bot/ARRP.git") {
+        producesModule("net.devtech:arrp")
+    }
 }
