@@ -1,5 +1,24 @@
 {
   "variants": {
-    "": { "model": "prima_materia:block/ore/acanthite" }
+    "strata=andesite": { "model": "prima_materia:block/ore/acanthite_andesite" },
+    "strata=basalt": { "model": "prima_materia:block/ore/acanthite_basalt" },
+    "strata=dacite": { "model": "prima_materia:block/ore/acanthite_dacite" },
+    "strata=diorite": { "model": "prima_materia:block/ore/acanthite_diorite" },
+    "strata=gabbro": { "model": "prima_materia:block/ore/acanthite_gabbro" },
+    "strata=granite": { "model": "prima_materia:block/ore/acanthite_granite" },
+    "strata=peridotite": { "model": "prima_materia:block/ore/acanthite_peridotite" },
+    "strata=rhyolite": { "model": "prima_materia:block/ore/acanthite_rhyolite" },
+    "strata=gneiss": { "model": "prima_materia:block/ore/acanthite_gneiss" },
+    "strata=marble": { "model": "prima_materia:block/ore/acanthite_marble" },
+    "strata=phylite": { "model": "prima_materia:block/ore/acanthite_phylite" },
+    "strata=quartzite": { "model": "prima_materia:block/ore/acanthite_quartzite" },
+    "strata=schist": { "model": "prima_materia:block/ore/acanthite_schist" },
+    "strata=slate": { "model": "prima_materia:block/ore/acanthite_slate" },
+    "strata=chalk": { "model": "prima_materia:block/ore/acanthite_chalk" },
+    "strata=chert": { "model": "prima_materia:block/ore/acanthite_chert" },
+    "strata=dolomite": { "model": "prima_materia:block/ore/acanthite_dolomite" },
+    "strata=limestone": { "model": "prima_materia:block/ore/acanthite_limestone" },
+    "strata=sandstone": { "model": "prima_materia:block/ore/acanthite_sandstone" },
+    "strata=shale": { "model": "prima_materia:block/ore/acanthite_shale" }
   }
 }

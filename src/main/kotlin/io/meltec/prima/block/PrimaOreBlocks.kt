@@ -51,7 +51,7 @@ object PrimaOreBlocks : PrimaBlockRegistry {
   }
 
   private fun createOre(miningLevel: Int): Block {
-    return Block(
+    return PrimaOreBlock(
         FabricBlockSettings.of(Material.STONE)
             .requiresTool()
             .strength(3.0f)
