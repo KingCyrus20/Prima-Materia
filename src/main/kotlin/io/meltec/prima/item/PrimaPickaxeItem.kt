@@ -32,7 +32,7 @@ class PrimaPickaxeItem(material: ToolMaterial?, attackDamage: Int, attackSpeed: 
     stack: ItemStack,
     user: LivingEntity?
   ): Float {
-    return if (BlockTags.PICKAXE_MINEABLE.contains(state.block))
+    return if (stack.isSuitableFor(state))
       stack.tag?.getFloat("mining_speed") ?: 1.0f
     else
       1.0f
